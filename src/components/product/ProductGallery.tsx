@@ -80,7 +80,7 @@ export function ProductGallery({ slug, images, alt }: Props) {
             {metas.map((pic, i) => (
               <span
                 key={pic.src}
-                className={`h-1.5 rounded-full transition-all ${i === active ? "w-6 bg-plum" : "w-1.5 bg-line"}`}
+                className={`h-1.5 rounded-full transition-all ${i === active ? "w-6 bg-maroon" : "w-1.5 bg-line"}`}
               />
             ))}
           </div>
@@ -170,7 +170,7 @@ function Lightbox({
           role="dialog"
           aria-modal="true"
           aria-label="Image zoom"
-          className="fixed inset-0 z-[80] bg-[#140b17]"
+          className="fixed inset-0 z-[80] bg-[#140c08]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

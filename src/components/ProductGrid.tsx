@@ -71,13 +71,13 @@ export function ShopGrid({ products }: { products: Product[] }) {
                 aria-pressed={on}
                 onClick={() => setParam("category", c.slug === "all" ? null : c.slug)}
                 className={`relative h-10 shrink-0 rounded-full px-4 text-[0.95rem] font-medium transition-colors duration-300 ${
-                  on ? "text-paper" : "text-ink shadow-[inset_0_0_0_1px_var(--line)] hover:text-plum"
+                  on ? "text-paper" : "text-ink shadow-[inset_0_0_0_1px_var(--line)] hover:text-maroon"
                 }`}
               >
                 {on && (
                   <m.span
                     layoutId="chip-active"
-                    className="absolute inset-0 rounded-full bg-plum"
+                    className="absolute inset-0 rounded-full bg-maroon"
                     transition={spring}
                   />
                 )}

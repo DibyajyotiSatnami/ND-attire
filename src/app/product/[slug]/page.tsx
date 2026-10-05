@@ -83,11 +83,11 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
             <ProductGallery slug={p.slug} images={p.images} alt={p.alt} />
           </div>
           <div className="lg:col-span-5 lg:pt-4">
-            <p className="text-sm font-medium text-teal">
+            <p className="text-sm font-medium text-tea">
               {isHandpainted(p) && p.category !== "handpainted" ? "Handpainted · " : ""}
               {categoryLabel(p.category)}
             </p>
-            <h1 className="display mt-3 text-3xl leading-[1.08] text-plum md:text-4xl">{p.name}</h1>
+            <h1 className="display mt-3 text-3xl leading-[1.08] text-maroon md:text-4xl">{p.name}</h1>
             <div className="mt-5 flex items-center gap-3">
               <Price value={p.price} className={p.price === null ? "text-lg" : "text-2xl"} />
               {p.soldOut && (
@@ -110,7 +110,7 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
               <ol className="mt-4 space-y-3 text-muted">
                 {STEPS.map((s, i) => (
                   <li key={s.title} className="grid grid-cols-[1.75rem_1fr]">
-                    <span className="display text-rose">{i + 1}</span>
+                    <span className="display text-gamosa">{i + 1}</span>
                     <span>
                       <span className="font-medium text-ink">{s.title}.</span> {s.body}
                     </span>
@@ -140,7 +140,7 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
 
       {related.length > 0 && (
         <section aria-labelledby="related-title" className="wrap pb-24">
-          <h2 id="related-title" className="display text-2xl text-plum">
+          <h2 id="related-title" className="display text-2xl text-maroon">
             You may also like
           </h2>
           <ul className="-mx-4 mt-8 grid grid-cols-2 gap-x-0.5 gap-y-10 sm:mx-0 sm:gap-x-6 md:grid-cols-4">

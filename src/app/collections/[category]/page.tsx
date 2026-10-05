@@ -33,14 +33,14 @@ export default async function CollectionPage({ params }: PageProps<"/collections
         </Link>{" "}
         / <span aria-current="page">{c.label}</span>
       </nav>
-      <h1 className="display mt-4 text-3xl text-plum md:text-4xl">{c.label}</h1>
+      <h1 className="display mt-4 text-3xl text-maroon md:text-4xl">{c.label}</h1>
       <p className="measure mt-3 text-muted">{c.blurb}</p>
       <h2 className="sr-only">{c.label} pieces</h2>
       <div className="mt-8">
         <CollectionGrid products={productsIn(c.slug)} />
       </div>
       <nav aria-label="Other collections" className="mt-20 border-t border-line pt-10">
-        <h2 className="display text-xl text-plum">More collections</h2>
+        <h2 className="display text-xl text-maroon">More collections</h2>
         <ul className="mt-5 flex flex-wrap gap-2">
           {categories
             .filter((x) => x.slug !== c.slug)
@@ -48,7 +48,7 @@ export default async function CollectionPage({ params }: PageProps<"/collections
               <li key={x.slug}>
                 <Link
                   href={`/collections/${x.slug}`}
-                  className="inline-flex h-10 items-center rounded-full px-4 font-medium shadow-[inset_0_0_0_1px_var(--line)] transition-colors hover:text-plum"
+                  className="inline-flex h-10 items-center rounded-full px-4 font-medium shadow-[inset_0_0_0_1px_var(--line)] transition-colors hover:text-maroon"
                 >
                   {x.label}
                 </Link>

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function ShopPage() {
   return (
     <div className="wrap pb-24 pt-10 md:pt-14">
-      <h1 className="display text-3xl text-plum md:text-4xl">Shop the collection</h1>
+      <h1 className="display text-3xl text-maroon md:text-4xl">Shop the collection</h1>
       <p className="measure mt-3 text-muted">
         Add pieces to your bag and send the order to us on WhatsApp. Handpainted designs are priced on request.
       </p>

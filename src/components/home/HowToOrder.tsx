@@ -14,7 +14,7 @@ export function HowToOrder() {
   return (
     <section id="how" aria-labelledby="how-title" className="bg-surface py-16 lg:py-24">
       <div className="wrap">
-        <h2 id="how-title" className="display text-2xl text-plum md:text-3xl">
+        <h2 id="how-title" className="display text-2xl text-maroon md:text-3xl">
           How ordering works
         </h2>
         <p className="measure mt-3 text-muted">
@@ -24,8 +24,8 @@ export function HowToOrder() {
           {STEPS.map((s, i) => (
             <li key={s.title} className="relative">
               <span aria-hidden className="relative grid size-12 place-items-center">
-                <span className="absolute inset-[6px] rotate-45 rounded-[4px] bg-rose" />
-                <span className="display relative text-lg text-rose-ink">{i + 1}</span>
+                <span className="absolute inset-[6px] rotate-45 rounded-[4px] bg-gamosa" />
+                <span className="display relative text-lg text-gamosa-ink">{i + 1}</span>
               </span>
               <h3 className="mt-5 text-lg font-semibold">{s.title}</h3>
               <p className="mt-2 max-w-[32ch] text-muted">{s.body}</p>

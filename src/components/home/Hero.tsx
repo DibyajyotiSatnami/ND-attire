@@ -56,7 +56,7 @@ export function Hero() {
   return (
     <section className="wrap grid items-center gap-10 pb-16 pt-10 md:pt-14 lg:grid-cols-12 lg:gap-8 lg:pb-16 lg:pt-16">
       <div className="lg:col-span-6">
-        <h1 className="display text-[clamp(2.6rem,5.6vw,4.4rem)] leading-[1.02] text-plum">
+        <h1 className="display text-[clamp(2.6rem,5.6vw,4.4rem)] leading-[1.02] text-maroon">
           <span className="intro-line block overflow-hidden pb-[0.08em]">
             <span className="block">Mekhela sador,</span>
           </span>
@@ -108,7 +108,7 @@ export function Hero() {
             </div>
           </div>
           <figcaption className="intro-fade absolute -left-2 bottom-8 max-w-[230px] rounded-[4px] bg-surface px-4 py-3 text-[0.95rem] leading-snug shadow-[var(--shadow)] sm:-left-6">
-            <Link href={`/product/${product.slug}`} className="display block text-lg text-rose hover:underline">
+            <Link href={`/product/${product.slug}`} className="display block text-lg text-gamosa hover:underline">
               Lavender handpainted
             </Link>
             Our most-requested design

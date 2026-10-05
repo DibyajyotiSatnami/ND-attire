@@ -57,7 +57,7 @@ export function ProductCard({
         {(product.soldOut || isHandpainted(product)) && (
           <span
             className={`pointer-events-none absolute left-3 top-3 rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-              product.soldOut ? "bg-ink text-paper" : "bg-surface/95 text-teal"
+              product.soldOut ? "bg-ink text-paper" : "bg-surface/95 text-tea"
             }`}
           >
             {product.soldOut ? "Sold out" : "Handpainted"}
@@ -72,7 +72,7 @@ export function ProductCard({
 
       <div className="flex flex-1 flex-col px-3 pt-3 sm:px-0 sm:pt-4">
         <h3 className="text-base font-semibold leading-snug">
-          <Link href={href} className="after:absolute after:inset-0 after:content-[''] hover:text-plum">
+          <Link href={href} className="after:absolute after:inset-0 after:content-[''] hover:text-maroon">
             {product.name}
           </Link>
         </h3>

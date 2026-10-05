@@ -19,7 +19,7 @@ const COVER: Record<CategorySlug, string> = {
 export function CollectionTiles() {
   return (
     <section aria-labelledby="collections-title" className="wrap py-16 lg:py-24">
-      <h2 id="collections-title" className="display text-2xl text-plum md:text-3xl">
+      <h2 id="collections-title" className="display text-2xl text-maroon md:text-3xl">
         Shop by collection
       </h2>
       <m.ul
@@ -53,7 +53,7 @@ export function CollectionTiles() {
                     className="object-cover transition-transform duration-[800ms] ease-[var(--ease-cloth)] motion-safe:group-hover:scale-[1.04]"
                   />
                 </div>
-                <h3 className="display mt-4 text-lg leading-tight text-plum group-hover:text-rose md:text-xl">
+                <h3 className="display mt-4 text-lg leading-tight text-maroon group-hover:text-gamosa md:text-xl">
                   {c.label}
                 </h3>
                 <p className="mt-1 hidden text-muted sm:block">{c.blurb}</p>

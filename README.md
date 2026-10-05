@@ -33,6 +33,22 @@ source-images/              client photos (inputs to the pipeline)
 public/images/              pipeline outputs (AVIF + WebP)
 ```
 
+## Colours
+
+An Assamese palette, defined once in `src/app/globals.css` (light and dark):
+
+| Token | Light | Use |
+|---|---|---|
+| `paper` | `#FBF5EA` muga ivory | page background |
+| `ink` | `#2B1A12` tea brown | text |
+| `maroon` | `#7A1C1C` | headings, primary UI |
+| `gamosa` | `#B3121F` gamosa red | prices, main buttons |
+| `muga` | `#A8741A` / `#E2B54F` | gold accents, focus rings |
+| `tea` | `#3B6B35` tea-garden green | "Handpainted" tags |
+| `wa` | `#1A7F45` | WhatsApp actions only |
+
+The signature woven band is a gamosa border: ivory diamonds with a muga-gold heart on gamosa red.
+
 ## Add a product
 
 It's a one-file change, plus a photo.

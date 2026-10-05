@@ -38,7 +38,7 @@ export function Header() {
               priority
               className="size-10 rounded-full lg:size-11"
             />
-            <span className="display text-[1.4rem] leading-none text-plum">ND Attire</span>
+            <span className="display text-[1.4rem] leading-none text-maroon">ND Attire</span>
           </Link>
 
           <nav aria-label="Main" className="ml-auto hidden md:block">
@@ -51,7 +51,7 @@ export function Header() {
                     <Link
                       href={n.href}
                       aria-current={active ? "page" : undefined}
-                      className="relative py-2 font-medium text-muted transition-colors duration-300 hover:text-plum aria-[current=page]:text-plum"
+                      className="relative py-2 font-medium text-muted transition-colors duration-300 hover:text-maroon aria-[current=page]:text-maroon"
                     >
                       {n.label}
                       {active && <span aria-hidden className="absolute inset-x-0 -bottom-0.5 h-px bg-muga" />}
@@ -65,7 +65,7 @@ export function Header() {
           <BagButton className="ml-auto md:ml-6" />
           <button
             type="button"
-            className="-mr-2 grid size-11 place-items-center rounded-full text-plum md:hidden"
+            className="-mr-2 grid size-11 place-items-center rounded-full text-maroon md:hidden"
             aria-label="Open menu"
             aria-expanded={menu}
             aria-controls="mobile-menu"
@@ -95,7 +95,7 @@ function BagButton({ className = "" }: { className?: string }) {
       onClick={() => setOpen(true)}
       aria-haspopup="dialog"
       aria-label={`Bag, ${count} ${count === 1 ? "item" : "items"}`}
-      className={`flex h-11 items-center gap-2 rounded-full pl-3 pr-2 text-plum transition-colors duration-300 hover:bg-plum/8 ${className}`}
+      className={`flex h-11 items-center gap-2 rounded-full pl-3 pr-2 text-maroon transition-colors duration-300 hover:bg-maroon/8 ${className}`}
     >
       <BagIcon width={22} height={22} />
       <span className="hidden font-medium sm:inline">Bag</span>
@@ -104,7 +104,7 @@ function BagButton({ className = "" }: { className?: string }) {
         initial={bump ? { scale: 1.45 } : false}
         animate={{ scale: 1 }}
         transition={{ ...spring, stiffness: 420, damping: 14 }}
-        className="inline-grid h-6 min-w-6 place-items-center rounded-full bg-rose px-1.5 text-xs font-semibold tabular-nums text-rose-ink"
+        className="inline-grid h-6 min-w-6 place-items-center rounded-full bg-gamosa px-1.5 text-xs font-semibold tabular-nums text-gamosa-ink"
       >
         {count}
       </m.span>
@@ -138,12 +138,12 @@ function MobileMenu({ open, onClose, pathname }: { open: boolean; onClose: () =>
           transition={{ duration: 0.6, ease }}
         >
           <div className="wrap flex h-[68px] items-center">
-            <span className="display text-[1.4rem] text-plum">ND Attire</span>
+            <span className="display text-[1.4rem] text-maroon">ND Attire</span>
             <button
               type="button"
               onClick={onClose}
               aria-label="Close menu"
-              className="-mr-2 ml-auto grid size-11 place-items-center rounded-full text-plum"
+              className="-mr-2 ml-auto grid size-11 place-items-center rounded-full text-maroon"
             >
               <CloseIcon width={24} height={24} />
             </button>
@@ -176,7 +176,7 @@ function MobileMenu({ open, onClose, pathname }: { open: boolean; onClose: () =>
                     href={n.href}
                     onClick={onClose}
                     aria-current={n.href === pathname ? "page" : undefined}
-                    className="display block py-2 text-[2.2rem] leading-tight text-plum aria-[current=page]:text-rose"
+                    className="display block py-2 text-[2.2rem] leading-tight text-maroon aria-[current=page]:text-gamosa"
                   >
                     {n.label}
                   </Link>

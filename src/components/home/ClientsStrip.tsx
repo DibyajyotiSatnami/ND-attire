@@ -24,7 +24,7 @@ export function ClientsStrip() {
   return (
     <section aria-labelledby="clients-title" className="py-16 lg:py-24">
       <div className="wrap">
-        <h2 id="clients-title" className="display text-2xl text-plum md:text-3xl">
+        <h2 id="clients-title" className="display text-2xl text-maroon md:text-3xl">
           Worn and loved
         </h2>
         <p className="measure mt-3 text-muted">
@@ -34,7 +34,7 @@ export function ClientsStrip() {
           <ul className="mt-8 grid gap-6 md:grid-cols-2">
             {site.testimonials.map((t) => (
               <li key={t.name}>
-                <blockquote className="display text-lg text-plum">“{t.quote}”</blockquote>
+                <blockquote className="display text-lg text-maroon">“{t.quote}”</blockquote>
                 <p className="mt-2 text-muted">{t.name}</p>
               </li>
             ))}

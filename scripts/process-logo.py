@@ -67,28 +67,29 @@ except Exception as e:  # noqa: BLE001
 app = ROOT / "src/app"
 icon = badge.resize((512, 512), Image.LANCZOS)
 icon.save(app / "icon.png", optimize=True)
-apple = Image.new("RGBA", (180, 180), (255, 248, 250, 255))
+apple = Image.new("RGBA", (180, 180), (251, 245, 234, 255))
 apple.alpha_composite(badge.resize((180, 180), Image.LANCZOS))
 apple.convert("RGB").save(app / "apple-icon.png", optimize=True)
 badge.resize((256, 256), Image.LANCZOS).save(app / "favicon.ico", sizes=[(16, 16), (32, 32), (48, 48), (64, 64)])
 
-# 4. Open Graph image: logo on plum with the woven band, tagline in the display face
+# 4. Open Graph image: logo on deep maroon between gamosa borders, tagline in the display face
 W, H = 1200, 630
-PLUM, ROSE, GOLD, BLUSH = (94, 42, 99), (194, 24, 91), (226, 181, 79), (255, 248, 250)
-og = Image.new("RGB", (W, H), PLUM)
+MAROON, GAMOSA, GOLD, IVORY = (94, 20, 20), (163, 22, 30), (226, 181, 79), (251, 245, 234)
+og = Image.new("RGB", (W, H), MAROON)
 d = ImageDraw.Draw(og)
 
 
 def band(y, hgt=30):
-    d.rectangle((0, y, W, y + hgt), fill=PLUM)
+    """A gamosa border: ivory diamonds with a red core and muga-gold heart on red, with pinstripes."""
+    d.rectangle((0, y, W, y + hgt), fill=GAMOSA)
+    d.line((0, y + 2, W, y + 2), fill=IVORY, width=2)
+    d.line((0, y + hgt - 2, W, y + hgt - 2), fill=IVORY, width=2)
     step = hgt * 2
     for x in range(-step, W + step, step):
         cx, cy = x + step / 2, y + hgt / 2
-        r = hgt / 2 - 1
-        d.polygon([(cx, cy - r), (cx + r, cy), (cx, cy + r), (cx - r, cy)], fill=ROSE)
-        r2 = r * 0.45
-        d.polygon([(cx, cy - r2), (cx + r2, cy), (cx, cy + r2), (cx - r2, cy)], fill=GOLD)
-        r3 = r * 0.33
+        for r, fill in ((hgt * 0.36, IVORY), (hgt * 0.2, GAMOSA), (hgt * 0.09, GOLD)):
+            d.polygon([(cx, cy - r), (cx + r, cy), (cx, cy + r), (cx - r, cy)], fill=fill)
+        r3 = hgt * 0.16
         d.polygon([(x, cy - r3), (x + r3, cy), (x, cy + r3), (x - r3, cy)], fill=GOLD)
 
 
@@ -103,9 +104,9 @@ try:
     f2 = ImageFont.truetype(str(body_path), 34)
 except OSError:
     f1 = f2 = ImageFont.load_default()
-d.text((560, 210), "ND Attire", font=f1, fill=BLUSH)
-d.text((560, 300), "Handpainted mekhela sador", font=f2, fill=(247, 200, 218))
-d.text((560, 345), "and bridal dupattas", font=f2, fill=(247, 200, 218))
+d.text((560, 210), "ND Attire", font=f1, fill=IVORY)
+d.text((560, 300), "Handpainted mekhela sador", font=f2, fill=(235, 194, 122))
+d.text((560, 345), "and bridal dupattas", font=f2, fill=(235, 194, 122))
 d.text((560, 410), "Order on WhatsApp", font=f2, fill=GOLD)
 og.save(app / "opengraph-image.png", optimize=True)
 print("logo, icons and OG image written")

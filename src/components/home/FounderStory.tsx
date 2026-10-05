@@ -34,7 +34,7 @@ export function FounderStory() {
           </div>
         </div>
         <div className="mt-10 lg:col-span-5 lg:col-start-8 lg:mt-0">
-          <h2 id="story-title" className="display text-2xl text-plum md:text-3xl">
+          <h2 id="story-title" className="display text-2xl text-maroon md:text-3xl">
             Style that speaks, comfort that lasts
           </h2>
           <div className="mt-6 space-y-4 text-ink/90">
@@ -47,7 +47,7 @@ export function FounderStory() {
               with special collections for Durga Puja and the wedding season.
             </p>
           </div>
-          <Link href="/about" className="link-underline mt-8 inline-block font-medium text-plum">
+          <Link href="/about" className="link-underline mt-8 inline-block font-medium text-maroon">
             Read our story
           </Link>
         </div>

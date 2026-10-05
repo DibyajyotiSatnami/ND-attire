@@ -68,7 +68,7 @@ function BagContents({ onClose }: { onClose: () => void }) {
   return (
     <>
       <div className="flex items-center justify-between px-6 pt-5 pb-4">
-        <h2 id="bag-title" className="display text-xl text-plum">
+        <h2 id="bag-title" className="display text-xl text-maroon">
           Your bag
         </h2>
         <button
@@ -76,7 +76,7 @@ function BagContents({ onClose }: { onClose: () => void }) {
           data-autofocus
           onClick={onClose}
           aria-label="Close bag"
-          className="-mr-2 grid size-11 place-items-center rounded-full text-muted transition-colors hover:text-plum"
+          className="-mr-2 grid size-11 place-items-center rounded-full text-muted transition-colors hover:text-maroon"
         >
           <CloseIcon width={24} height={24} />
         </button>
@@ -86,9 +86,9 @@ function BagContents({ onClose }: { onClose: () => void }) {
       <div className="flex-1 overflow-y-auto overscroll-contain px-6">
         {lines.length === 0 ? (
           <div className="py-16 text-center">
-            <p className="display text-lg text-plum">Your bag is empty</p>
+            <p className="display text-lg text-maroon">Your bag is empty</p>
             <p className="mx-auto mt-2 max-w-[30ch] text-muted">Add a piece from the collection to start an order.</p>
-            <Link href="/shop" onClick={onClose} className="btn btn-plum mt-6">
+            <Link href="/shop" onClick={onClose} className="btn btn-maroon mt-6">
               Browse the collection
             </Link>
           </div>
@@ -122,18 +122,18 @@ function BagContents({ onClose }: { onClose: () => void }) {
                         <Link
                           href={`/product/${l.slug}`}
                           onClick={onClose}
-                          className="font-semibold leading-snug hover:text-plum"
+                          className="font-semibold leading-snug hover:text-maroon"
                         >
                           {l.name}
                         </Link>
-                        <span className="display shrink-0 text-rose">{rupee(l.price * l.qty)}</span>
+                        <span className="display shrink-0 text-gamosa">{rupee(l.price * l.qty)}</span>
                       </div>
                       <div className="mt-3 flex items-center justify-between">
                         <Stepper value={l.qty} label={l.name} removeAtMin onChange={(q) => setQty(l.slug, q)} />
                         <button
                           type="button"
                           onClick={() => remove(l.slug)}
-                          className="link-underline text-sm text-muted hover:text-rose"
+                          className="link-underline text-sm text-muted hover:text-gamosa"
                           aria-label={`Remove ${l.name}`}
                         >
                           Remove
@@ -152,7 +152,7 @@ function BagContents({ onClose }: { onClose: () => void }) {
         <div className="border-t border-line px-6 pt-5 pb-6">
           <div className="flex items-baseline justify-between">
             <span className="font-medium">Total</span>
-            <AnimatedRupee value={total} className="display text-xl text-rose" />
+            <AnimatedRupee value={total} className="display text-xl text-gamosa" />
           </div>
           <div className="mt-4 grid gap-3">
             <label className="grid gap-1.5">
@@ -210,7 +210,7 @@ export function Stepper({
         onClick={() => onChange(value - 1)}
         disabled={value <= 1 && !removeAtMin}
         aria-label={value <= 1 && removeAtMin ? `Remove ${label}` : `One less ${label}`}
-        className="grid size-10 place-items-center rounded-full text-muted transition-colors hover:text-plum disabled:opacity-40"
+        className="grid size-10 place-items-center rounded-full text-muted transition-colors hover:text-maroon disabled:opacity-40"
       >
         <MinusIcon width={16} height={16} />
       </button>
@@ -222,7 +222,7 @@ export function Stepper({
         onClick={() => onChange(value + 1)}
         disabled={value >= 99}
         aria-label={`One more ${label}`}
-        className="grid size-10 place-items-center rounded-full text-muted transition-colors hover:text-plum disabled:opacity-40"
+        className="grid size-10 place-items-center rounded-full text-muted transition-colors hover:text-maroon disabled:opacity-40"
       >
         <PlusIcon width={16} height={16} />
       </button>

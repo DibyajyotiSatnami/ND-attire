@@ -36,7 +36,7 @@ export default function AboutPage() {
     <>
       <section className="wrap grid items-end gap-10 pb-16 pt-10 md:pt-14 lg:grid-cols-12 lg:gap-8 lg:pb-24">
         <div className="lg:col-span-6">
-          <h1 className="display text-[clamp(2.4rem,6vw,4rem)] leading-[1.04] text-plum">
+          <h1 className="display text-[clamp(2.4rem,6vw,4rem)] leading-[1.04] text-maroon">
             Every piece starts with a brushstroke
           </h1>
           <p className="measure mt-6 text-lg text-muted">
@@ -67,7 +67,7 @@ export default function AboutPage() {
           </div>
           <div className="lg:col-span-6 lg:col-start-7">
             <WovenBand mode="view" height={10} className="w-24 [background-size:20px_10px]" />
-            <h2 id="craft-title" className="display mt-6 text-2xl text-plum md:text-3xl">
+            <h2 id="craft-title" className="display mt-6 text-2xl text-maroon md:text-3xl">
               Painted by hand, one piece at a time
             </h2>
             <div className="mt-6 space-y-4">
@@ -88,7 +88,7 @@ export default function AboutPage() {
       <section aria-labelledby="range-title" className="wrap py-16 lg:py-24">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">
-            <h2 id="range-title" className="display text-2xl text-plum md:text-3xl">
+            <h2 id="range-title" className="display text-2xl text-maroon md:text-3xl">
               Beyond the brush
             </h2>
             <p className="measure mt-6">
@@ -127,10 +127,10 @@ export default function AboutPage() {
       <WeaveDivider />
 
       <section className="wrap py-16 text-center lg:py-24">
-        <h2 className="display mx-auto max-w-[20ch] text-2xl text-plum md:text-3xl">Say hello</h2>
+        <h2 className="display mx-auto max-w-[20ch] text-2xl text-maroon md:text-3xl">Say hello</h2>
         <p className="mx-auto mt-4 max-w-[46ch] text-muted">
           Follow {site.founder} at{" "}
-          <a href={site.founderInstagram} target="_blank" rel="noopener" className="link-underline text-plum">
+          <a href={site.founderInstagram} target="_blank" rel="noopener" className="link-underline text-maroon">
             {site.founderHandle}
           </a>{" "}
           and the label at {site.instagramHandle} for new pieces.

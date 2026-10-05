@@ -37,7 +37,7 @@ export function FeaturedCarousel({ products }: { products: Product[] }) {
     <section aria-labelledby="featured-title" className="pb-16 pt-6 lg:pb-24 lg:pt-12">
       <div className="wrap flex items-end justify-between gap-6">
         <div>
-          <h2 id="featured-title" className="display text-2xl text-plum md:text-3xl">
+          <h2 id="featured-title" className="display text-2xl text-maroon md:text-3xl">
             The handpainted collection
           </h2>
           <p className="measure mt-3 text-muted">
@@ -51,7 +51,7 @@ export function FeaturedCarousel({ products }: { products: Product[] }) {
             onClick={() => page(-1)}
             disabled={edge.start}
             aria-label="Previous pieces"
-            className="grid size-11 place-items-center rounded-full text-plum shadow-[inset_0_0_0_1px_var(--line)] transition-opacity hover:bg-plum/5 disabled:opacity-35"
+            className="grid size-11 place-items-center rounded-full text-maroon shadow-[inset_0_0_0_1px_var(--line)] transition-opacity hover:bg-maroon/5 disabled:opacity-35"
           >
             <ChevronIcon className="rotate-180" />
           </button>
@@ -60,7 +60,7 @@ export function FeaturedCarousel({ products }: { products: Product[] }) {
             onClick={() => page(1)}
             disabled={edge.end}
             aria-label="Next pieces"
-            className="grid size-11 place-items-center rounded-full text-plum shadow-[inset_0_0_0_1px_var(--line)] transition-opacity hover:bg-plum/5 disabled:opacity-35"
+            className="grid size-11 place-items-center rounded-full text-maroon shadow-[inset_0_0_0_1px_var(--line)] transition-opacity hover:bg-maroon/5 disabled:opacity-35"
           >
             <ChevronIcon />
           </button>
@@ -91,7 +91,7 @@ export function FeaturedCarousel({ products }: { products: Product[] }) {
       </m.ul>
 
       <div className="wrap mt-8">
-        <Link href="/collections/handpainted" className="link-underline font-medium text-plum">
+        <Link href="/collections/handpainted" className="link-underline font-medium text-maroon">
           See all handpainted pieces
         </Link>
       </div>

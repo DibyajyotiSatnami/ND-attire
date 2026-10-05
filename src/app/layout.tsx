@@ -35,8 +35,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FFF8FA" },
-    { media: "(prefers-color-scheme: dark)", color: "#1B1120" },
+    { media: "(prefers-color-scheme: light)", color: "#FBF5EA" },
+    { media: "(prefers-color-scheme: dark)", color: "#1A120C" },
   ],
 };
 
@@ -68,7 +68,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
         <a
           href="#main"
-          className="sr-only z-[70] rounded-full bg-plum px-5 py-3 text-paper focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+          className="sr-only z-[70] rounded-full bg-maroon px-5 py-3 text-paper focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
         >
           Skip to content
         </a>

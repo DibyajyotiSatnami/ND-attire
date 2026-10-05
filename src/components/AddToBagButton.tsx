@@ -28,7 +28,7 @@ export function ProductAction({ product, qty = 1, flyFrom, className = "", size 
 
   if (product.soldOut) {
     return (
-      <button type="button" disabled className={`btn btn-plum ${sz} ${className}`}>
+      <button type="button" disabled className={`btn btn-maroon ${sz} ${className}`}>
         Sold out
       </button>
     );
@@ -58,7 +58,7 @@ export function ProductAction({ product, qty = 1, flyFrom, className = "", size 
         timer.current = window.setTimeout(() => setState("idle"), 1400);
       }}
       aria-label={size === "sm" ? `${label}: ${product.name}` : undefined}
-      className={`btn ${state === "added" ? "bg-teal text-paper" : "btn-plum"} relative overflow-hidden ${sz} ${className}`}
+      className={`btn ${state === "added" ? "bg-tea text-paper" : "btn-maroon"} relative overflow-hidden ${sz} ${className}`}
     >
       <AnimatePresence mode="popLayout" initial={false}>
         <m.span

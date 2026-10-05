@@ -281,5 +281,5 @@ export const productsIn = (category: CategorySlug) => products.filter((p) => p.c
 export const isCategory = (s: string | null | undefined): s is CategorySlug =>
   !!s && categories.some((c) => c.slug === s);
 
-/** Handpainted pieces get the teal "Handpainted" tag. */
+/** Handpainted pieces get the tea-green "Handpainted" tag. */
 export const isHandpainted = (p: Product) => p.category === "handpainted" || p.category === "bridal";
