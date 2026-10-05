@@ -1,0 +1,375 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ tokens */
+:root {
+  --paper: #fff8fa;
+  --surface: #ffffff;
+  --sunk: #f7ebf0;
+  --ink: #2b1630;
+  --muted: #6e5a70;
+  --plum: #5e2a63;
+  --rose: #c2185b;
+  --rose-ink: #ffffff;
+  --muga: #b8862e;
+  --muga-light: #e2b54f;
+  --teal: #2f6f6a;
+  --wa: #1a7f45; /* brief: #1F8F4E, deepened to pass WCAG AA (4.8:1) */
+  --line: #ead9e2;
+  --scrim: rgb(27 17 32 / 0.5);
+  --shadow: 0 24px 60px -24px rgb(43 22 48 / 0.35);
+
+  /* the woven band is a textile: same colours in both themes */
+  --band-plum: #5e2a63;
+  --band-rose: #c2185b;
+  --band-gold: #e2b54f;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #1b1120;
+    --surface: #251729;
+    --sunk: #20141f;
+    --ink: #f7eaf0;
+    --muted: #c2aec5;
+    --plum: #d7a6da;
+    --rose: #f06c9b;
+    --rose-ink: #1b1120;
+    --muga: #d9ae5b;
+    --teal: #7cc2bb;
+    --wa: #3dbb72;
+    --line: #3c2a41;
+    --scrim: rgb(8 4 10 / 0.6);
+    --shadow: 0 24px 60px -24px rgb(0 0 0 / 0.6);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #1b1120;
+  --surface: #251729;
+  --sunk: #20141f;
+  --ink: #f7eaf0;
+  --muted: #c2aec5;
+  --plum: #d7a6da;
+  --rose: #f06c9b;
+  --rose-ink: #1b1120;
+  --muga: #d9ae5b;
+  --teal: #7cc2bb;
+  --wa: #3dbb72;
+  --line: #3c2a41;
+  --scrim: rgb(8 4 10 / 0.6);
+  --shadow: 0 24px 60px -24px rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-sunk: var(--sunk);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-plum: var(--plum);
+  --color-rose: var(--rose);
+  --color-rose-ink: var(--rose-ink);
+  --color-muga: var(--muga);
+  --color-muga-light: var(--muga-light);
+  --color-teal: var(--teal);
+  --color-wa: var(--wa);
+  --color-line: var(--line);
+  --color-footer: #2b1630;
+
+  --font-display: var(--font-young-serif), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-mukta), "Segoe UI", system-ui, sans-serif;
+
+  /* type scale, 1.250 ratio from a 17px base */
+  --text-xs: 0.85rem;
+  --text-xs--line-height: 1.45;
+  --text-sm: 0.94rem;
+  --text-sm--line-height: 1.5;
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.6;
+  --text-lg: 1.328rem;
+  --text-lg--line-height: 1.45;
+  --text-xl: 1.66rem;
+  --text-xl--line-height: 1.25;
+  --text-2xl: 2.075rem;
+  --text-2xl--line-height: 1.15;
+  --text-3xl: 2.594rem;
+  --text-3xl--line-height: 1.1;
+  --text-4xl: 3.242rem;
+  --text-4xl--line-height: 1.05;
+  --text-5xl: 4.053rem;
+  --text-5xl--line-height: 1.02;
+
+  --ease-cloth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ------------------------------------------------------------------- base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 96px;
+}
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+@media (min-width: 1024px) {
+  body {
+    font-size: 1.125rem;
+  }
+}
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+p {
+  text-wrap: pretty;
+}
+::selection {
+  background: var(--muga-light);
+  color: #2b1630;
+}
+:focus-visible {
+  outline: 3px solid var(--muga);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.focus-ring-inset:focus-visible {
+  outline-offset: -3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------- helpers */
+@utility wrap {
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: 16px;
+  @media (min-width: 640px) {
+    padding-inline: 32px;
+  }
+  @media (min-width: 1280px) {
+    padding-inline: 48px;
+  }
+}
+
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+@utility measure {
+  max-width: 62ch;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* The signature: a mekhela woven border, diamonds in rose and muga on plum. */
+@utility weave {
+  background-color: var(--band-plum);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='18'%3E%3Cpath d='M18 1 L27 9 L18 17 L9 9Z' fill='%23C2185B'/%3E%3Cpath d='M18 5 L22 9 L18 13 L14 9Z' fill='%23E2B54F'/%3E%3Cpath d='M0 9 L3 6 L6 9 L3 12Z M30 9 L33 6 L36 9 L33 12Z' fill='%23E2B54F'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: left center;
+  background-size: 36px 18px;
+}
+
+@utility weave-frame {
+  background-color: var(--band-plum);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 2 L24 14 L14 26 L4 14Z' fill='%23C2185B'/%3E%3Cpath d='M14 8 L19 14 L14 20 L9 14Z' fill='%23E2B54F'/%3E%3C/svg%3E");
+  background-size: 28px 28px;
+}
+
+/* Buttons */
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 48px;
+  padding: 0 1.6rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.3s var(--ease-cloth),
+    color 0.3s var(--ease-cloth),
+    border-color 0.3s var(--ease-cloth),
+    transform 0.3s var(--ease-cloth);
+  &:active {
+    transform: scale(0.98);
+  }
+  &:disabled,
+  &[aria-disabled="true"] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+@utility btn-primary {
+  background: var(--rose);
+  color: var(--rose-ink);
+  &:hover {
+    background: color-mix(in oklab, var(--rose) 88%, black);
+  }
+}
+@utility btn-plum {
+  background: var(--plum);
+  color: var(--paper);
+  &:hover {
+    background: color-mix(in oklab, var(--plum) 88%, black);
+  }
+}
+@utility btn-wa {
+  background: transparent;
+  color: var(--wa);
+  box-shadow: inset 0 0 0 1.5px var(--wa);
+  &:hover {
+    background: color-mix(in oklab, var(--wa) 10%, transparent);
+  }
+}
+@utility btn-wa-solid {
+  background: var(--wa);
+  color: #fff;
+  &:hover {
+    background: color-mix(in oklab, var(--wa) 88%, black);
+  }
+}
+@utility btn-ghost {
+  background: transparent;
+  color: var(--plum);
+  box-shadow: inset 0 0 0 1.5px var(--plum);
+  &:hover {
+    background: color-mix(in oklab, var(--plum) 8%, transparent);
+  }
+}
+
+@utility link-underline {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  text-decoration-color: color-mix(in oklab, currentColor 40%, transparent);
+  transition: text-decoration-color 0.3s;
+  &:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+/* ------------------------------------------------- hero intro (once per session)
+   Gated by html[data-intro="play"], set by an inline script before first paint.
+   band weaves in → headline lines rise from a mask → image unveils in its frame
+   → CTAs fade in. Total 1.8s. Only transform, opacity and clip-path animate. */
+@keyframes intro-weave {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes intro-rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+/* the image unveils by a plum panel lifting away (transform only, so the image
+   itself paints on the first frame and stays the LCP candidate) */
+@keyframes intro-unveil {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0);
+  }
+}
+@keyframes intro-zoom {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes intro-fade {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+[data-intro="play"] .intro-band > * {
+  animation: intro-weave 0.6s var(--ease-cloth) both;
+}
+[data-intro="play"] .intro-line > span {
+  animation: intro-rise 0.8s var(--ease-cloth) 0.35s both;
+}
+[data-intro="play"] .intro-line + .intro-line > span {
+  animation-delay: 0.47s;
+}
+[data-intro="play"] .intro-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--band-plum);
+  transform-origin: 50% 0;
+  animation: intro-unveil 1s var(--ease-cloth) 0.6s both;
+}
+[data-intro="play"] .intro-zoom {
+  animation: intro-zoom 1.1s var(--ease-cloth) 0.6s both;
+}
+[data-intro="play"] .intro-fade {
+  animation: intro-fade 0.55s var(--ease-cloth) 1.25s both;
+}
+
+/* card → product page morph (React ViewTransition) */
+::view-transition-group(.morph) {
+  animation-duration: 0.7s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

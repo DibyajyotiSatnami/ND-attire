@@ -1,0 +1,158 @@
+{
+  "products/ds-green": {
+    "src": "/images/products/ds-green/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAABwAgCdASoNABAAAsBMJYgCdAYtfUcFwv0nsn+YAP62yU2aqrvk1Su3MD3E47Zh5zDEtYazFJ2McAl+Yl34Adig3Z1/ReP2A8wC5w9isWv8/QT+VUVA0R8TcIn79fuwgCtmrVbHbJ4TzEYoNROlnV4WrDZjBoHMAAA="
+  },
+  "products/ds-pink": {
+    "src": "/images/products/ds-pink/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAAAwAgCdASoNABAAAsBMJbACdAEWIrZ6nS9AAAD+k5NbPgr/VWx5GXMaHc6CMMcmG9SvjfCU0scoRpo0axsQM3Yv4t1dJa2jgwD2a3nsldeLz9zqfIlqs2Ozue/wx8aIe9+pmfrSj9rmWSBr95UAAA=="
+  },
+  "products/ds-red": {
+    "src": "/images/products/ds-red/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAQAgCdASoNABAAAsBMJbACdAEVwp5Pd1IAAP6InXDVwEdJs6l25pAehXGfjwkG2oN9pdB81KDEYaNf/mhhE6f9/daJdx7f3OQzrF0Kxsm8lgAA"
+  },
+  "products/ds-seagreen": {
+    "src": "/images/products/ds-seagreen/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAAAQAgCdASoNABAAAsBMJbACdAEV87dZPDFoAP7XcedBQBw11WUYyRZdUMGuLs0XR8azoJXR+te4/eMRN1RsBZNVr0l4l8VZMfPAykOu/h+WhQPc2++jI6q4VUhkB6THdoAAAA=="
+  },
+  "products/hl-staple-blue": {
+    "src": "/images/products/hl-staple-blue/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRpYAAABXRUJQVlA4IIoAAABQAgCdASoNABAAAsBMJbACdAYrx2yPG0/EuAAA/vWDA6zTudY7ZltGoY1u6KN9GelwiLcKwBDhRJRpHO2KiBR8enDuk79dqLpRe8Bf0QW1Qs8flPri6NdMl13E1I4hZ6RjZq7eLFj+7cWuM+0LYdxj2DfpsK/9rDZvd1wRQC/N79cELoNqe5Yd0AA="
+  },
+  "products/hl-staple-purple": {
+    "src": "/images/products/hl-staple-purple/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAACQAgCdASoNABAAAsBMJbACdDiAByomtVH8TH2GAAD+B5aw95dqDjcU529h6fIWpVqVGheYAGNzqgN0+F8LMtrN4/n/bzkvAMszr/atPlWH2HBeLSyAZydvZKHPbtXZfukhSRNUMSGVUJhdZejPRA8ledhfsqTL91fsAuzXFAA="
+  },
+  "products/hl-wash-pink": {
+    "src": "/images/products/hl-wash-pink/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAQCdASoNABAAAsBMJagCdADRGxH5NeAAyQbFD9XMpkuob2ESXQ37deapKUiG0QSua7AaCX5cfdZvpsQsu4OlgNeKbov9wfYr+mGeAAA="
+  },
+  "products/hl-wash-red": {
+    "src": "/images/products/hl-wash-red/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAABwAgCdASoNABAAAsBMJbACdEf/i1yJZErSIHGAAP7u5lHh/T+QfMbOPGfpz+f0/GQ1rv2u1hfVNoxm2F60bgC2xWw42pREnWEN11P8Lt1DaNdZh+YSp1d2DliG+1h3dJU5rEIKKiBUHf/vMx4x/+l25/MRXE7x75DQAA=="
+  },
+  "products/hl-wash-wine": {
+    "src": "/images/products/hl-wash-wine/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAAAwAgCdASoNABAAAsBMJbACdAD0t8C77uNnwADMdS3DLDKTREdmd+tIArG6/CAkeq9Y2k7sLz0Acys5kkrNF9X7m4vzWfpthRXQRkxTLQncZxmq+1Eaw1iCe9pl/uc8GD25u32x34JcormIAAA="
+  },
+  "products/hp-blue-floral": {
+    "src": "/images/products/hp-blue-floral/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAAAwAgCdASoNABAAAsBMJbACdLoAAwYC8MJLAAD+7DEnL1k7XnRpxsb0r5/ggwM5dehzxebdpyiEoifoua2T9cpaAN6RfWHtnDHf+jyO/+W2pjT+UWxEOXy4LlMZIG1fyIRokni38QtvbPTX68WQAA=="
+  },
+  "products/hp-lavender": {
+    "src": "/images/products/hp-lavender/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAABQAgCdASoNABAAAsBMJZACdIExGBvNb8C3TtgAzj69FyCYBGlqc0kvJE3/L7eWhlMhL+sFeN6uW4qilUsrie8k4rRaWlff4dP//lrivZUnm5U6oNBrEkaMoHJls40uNSVX7IGKgkaAAA=="
+  },
+  "products/hp-lotus-green": {
+    "src": "/images/products/hp-lotus-green/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAACQAgCdASoNABAAAsBMJbACdFQAA25GJxRxmyzBeAD+6tR7v9eakMMUVz2ticMinM39q1GZ01d7cNHxXbwMECdm2NB1pq9KgP+tvkadJ9rnqWd1uJMQSAIjfoKHfiCqvkJ9RM9gXxxOzOUzdACk3I1JDwIQYAAA"
+  },
+  "products/hp-pink-rose": {
+    "src": "/images/products/hp-pink-rose/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAADwAQCdASoNABAAAsBMJbACdB2gAbK2hgAA/tEYPcxQRxKn0SGfZ/Kf9SIL56iTHn8SIXJX6lQT3QNPRSAXoxIdGJytpfaH3/zlZlft/6ImEV5/4DACSeVJNWKt4gAA"
+  },
+  "products/hp-sky": {
+    "src": "/images/products/hp-sky/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAACwAQCdASoNABAAAsBMJbACdACqfdIAAPfUD4lFD2QyiY1tuxxU4JhAuG1RREmPdnu0NigE9eHeKV2Qx2Sp0yKdcZ81kfTfcpmyNqNBpolhpYDwaViIysDJEZwQ+jpMo8t1chcYtAAAAA=="
+  },
+  "products/hp-white-lotus": {
+    "src": "/images/products/hp-white-lotus/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAACQAgCdASoNABAAAsBMJYgCdAYuHzobgiusCahzwAD+mqzn4OK6mK3Z5VniwDqXAzpftXKOgC8d+WSGhGtGITFXPlph3FTEH5io9YOHJOftROVTVhcmDcVCPY2RxGkxALEpl5QcRnq///7MUHJLvwITAuYp/ffYaE0GdKAhfTbtdFjtwQyAAA=="
+  },
+  "products/hp-wisteria": {
+    "src": "/images/products/hp-wisteria/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAAAQAgCdASoNABAAAsBMJbACdAC3uPwfk7LQAP6WgMc6o+5PlaHF0Yrl7ytEsM30S1Qb1gfgLDmEkfWcTTdZAaEFmGlPwcJzks3SIQnvjobeIyMJ6ho5C1+n/ZM7tlAXqu3w4eNujWcwAA=="
+  },
+  "products/mm-masrise": {
+    "src": "/images/products/mm-masrise/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAAAQAgCdASoNABAAAsBMJbACdAYu5okN8HgAAP7Sab4OIyr3+Tbs28lOzfzH8uvgWwx9TxY8S4joeP2yMAYcH1L0rX4hPXhRezIjeiswFKMFsv2iyZSINO7S6meGmprRZCxDeHzV9RzpSGxvcMcqpnmG2cMqSJ9r77yUEgAA"
+  },
+  "products/mm-padmini": {
+    "src": "/images/products/mm-padmini/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAACwAQCdASoNABAAAsBMJbACdADPq3MAAP7ii3A5SdjoMuyuz2WeGV29+QTQ+3ydrorVCCk8lYnyi1rHDivI8zhee80qDFPnceRI5V//HaKQp+zGsdwA/Pi5Ys3yORcAAAA="
+  },
+  "products/mm-wash": {
+    "src": "/images/products/mm-wash/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAABQAgCdASoNABAAAsBMJbACdAEWPX/wF0i41qgA/olkEq00dZyO5+8dOXFoLv7ET6LDGPruugZne4sisWaUOkhdM+PXq9b/geAtKbl1pxt+OwP++sweTMGZou5pviyFgMYFqmWpV98UxuczFOSwrr8AAAA="
+  },
+  "products/of-combo": {
+    "src": "/images/products/of-combo/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAAAwAgCdASoNABAAAsBMJbACdAYvNbHUM1Q5wAD+twed4+iUTtL3yHecpeNt1TpmUk33mo20wl6Or8aE2cvWAtkvy2MjLB6nm4GHRNP8vbaC5yEymwGCkbJksfu10ZBtJ6ftjDhYUb5/NN1kRw4uJgMAAAA="
+  },
+  "products/of-semipat": {
+    "src": "/images/products/of-semipat/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAAAwAgCdASoNABAAAsBMJbACsAEDol4DnGz+iAD+n+vm9wpaEwPddJ9D0WWZnujCBX0vLjXt960twsGpHDuNqRiix1jqGKYrrxLL3OMVWBLPS74nBMHl9FC3hc2ZvLN9BRRH0RqHsMOCZ02VIj6+k0SfnWBVgAAA"
+  },
+  "brand/client-1": {
+    "src": "/images/brand/client-1/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAABQAgCdASoNABAAAsBMJaACdAYv/uJS7+4s4sAA/tz/TIC6NN5U0zxD52OZN5lJ8luLIxXD3yuWA7VIlhDD30cY/sne5MI8hhyblcFNohrK8bcqbyEfeo6ckmOB2dek3ttosm3+wbyt0DyuBDY63FBc1eK5AAAA"
+  },
+  "brand/client-2": {
+    "src": "/images/brand/client-2/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAABQAgCdASoNABAAAsBMJbACdAYrddBACa4AuAAA/sGyfTp0xfbs98il0/WsH5edxB6D8sdJUHhVu4tkchWERKjskfAMl2WEOwKXLl2Fi47Ddw+Er1Uc1jb2ma3JA4NQS3FoTg+g2tTwO7RScIkR4vNujXDiyancwwPAesVWAAA="
+  },
+  "brand/founder-studio": {
+    "src": "/images/brand/founder-studio/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAAAwAgCdASoNABAAAsBMJbACdAYuRlaZ2ZcFAADON4YYZmR8BsOoKULYgWqo9T1H/gJiyZxIbVWxaaa98t9k8z9h/Ornd8ndjRMMXzALeb8dXSyJ9zESdrz84T4D5Q6QVD0PsbS/pCm/6VSR33d7pvmfn9o9OImfoAAAAA=="
+  },
+  "brand/handpainting-process": {
+    "src": "/images/brand/handpainting-process/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADQAQCdASoNABAAAsBMJZQCdADzZFqsAAD+loNN7XwbzPc3BDZOoFfYGDkrW0VcYTkdisgHV87Gdbp8309LCdUAAAA="
+  },
+  "brand/orders-packed": {
+    "src": "/images/brand/orders-packed/1600.webp",
+    "width": 1280,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAAAwAgCdASoNABAAAsBMJbACdAYvNbHUM1Q5wAD+twed4+iUTtL3yHecpeNt1TpmUk33mo20wl6Or8aE2cvWAtkvy2MjLB6nm4GHRNP8vbaC5yEymwGCkbJksfu10ZBtJ6ftjDhYUb5/NN1kRw4uJgMAAAA="
+  }
+}

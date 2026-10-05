@@ -1,0 +1,687 @@
+{
+  "ds-green": {
+    "slug": "ds-green",
+    "group": "products",
+    "source": "source-images/products/ds-green.jpg",
+    "flags": [
+      "crop fallback found no clean window; inpainted instead",
+      "inpainted over patterned fabric; check for smears",
+      "below 1600px after 4x (965px tall); resized up on export"
+    ],
+    "source_size": [
+      193,
+      260
+    ],
+    "text": [
+      "DuraPuaCollectioe",
+      "MekhelaSador",
+      "signeuby0",
+      "PriceR1450",
+      "福",
+      "Toorderwhatsappus",
+      "7576843822"
+    ],
+    "mask_pct": 20.0,
+    "texture": 35.9,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      772,
+      965
+    ]
+  },
+  "ds-pink": {
+    "slug": "ds-pink",
+    "group": "products",
+    "source": "source-images/products/ds-pink.jpg",
+    "flags": [
+      "crop fallback found no clean window; inpainted instead",
+      "inpainted over patterned fabric; check for smears",
+      "below 1600px after 4x (960px tall); resized up on export"
+    ],
+    "source_size": [
+      192,
+      260
+    ],
+    "text": [
+      "Durga Pujaeo!lcetion",
+      "MekheiaSador",
+      "Designed byNDAtire",
+      "roorderwbatsappu",
+      "7576813822"
+    ],
+    "mask_pct": 20.1,
+    "texture": 38.1,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      768,
+      960
+    ]
+  },
+  "ds-red": {
+    "slug": "ds-red",
+    "group": "products",
+    "source": "source-images/products/ds-red.jpg",
+    "flags": [
+      "crop fallback found no clean window; inpainted instead",
+      "inpainted over patterned fabric; check for smears",
+      "below 1600px after 4x (965px tall); resized up on export"
+    ],
+    "source_size": [
+      193,
+      258
+    ],
+    "text": [
+      "Durga Puja Special",
+      "BesignedMekhea",
+      "Salon",
+      "wuniewhbipess",
+      "158035889",
+      "NDAelire"
+    ],
+    "mask_pct": 19.7,
+    "texture": 17.3,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      772,
+      965
+    ]
+  },
+  "ds-seagreen": {
+    "slug": "ds-seagreen",
+    "group": "products",
+    "source": "source-images/products/ds-seagreen.jpg",
+    "flags": [
+      "crop fallback found no clean window; inpainted instead",
+      "inpainted over patterned fabric; check for smears",
+      "below 1600px after 4x (960px tall); resized up on export"
+    ],
+    "source_size": [
+      192,
+      260
+    ],
+    "text": [
+      "Series(Episode2)",
+      "PriceRI900only",
+      "Toorderwhatsappus",
+      "7576843822"
+    ],
+    "mask_pct": 17.3,
+    "texture": 15.5,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      768,
+      960
+    ]
+  },
+  "hl-staple-blue": {
+    "slug": "hl-staple-blue",
+    "group": "products",
+    "source": "source-images/products/hl-staple-blue.jpg",
+    "flags": [
+      "crop fallback found no clean window; inpainted instead",
+      "inpainted over patterned fabric; check for smears",
+      "below 1600px after 4x (924px tall); resized up on export"
+    ],
+    "source_size": [
+      193,
+      231
+    ],
+    "text": [
+      "Handloom Sfaple",
+      "Cotton",
+      "1450only",
+      "orderwhotsapp",
+      "us"
+    ],
+    "mask_pct": 17.2,
+    "texture": 44.0,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      739,
+      924
+    ]
+  },
+  "hl-staple-purple": {
+    "slug": "hl-staple-purple",
+    "group": "products",
+    "source": "source-images/products/hl-staple-purple.jpg",
+    "flags": [
+      "crop fallback found no clean window; inpainted instead",
+      "inpainted over patterned fabric; check for smears",
+      "below 1600px after 4x (924px tall); resized up on export"
+    ],
+    "source_size": [
+      192,
+      231
+    ],
+    "text": [
+      "SOLD OUT",
+      "KX",
+      "Handloom Staple",
+      "\"Cotton"
+    ],
+    "mask_pct": 20.8,
+    "texture": 25.5,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      739,
+      924
+    ]
+  },
+  "hl-wash-pink": {
+    "slug": "hl-wash-pink",
+    "group": "products",
+    "source": "source-images/products/hl-wash-pink.jpg",
+    "flags": [
+      "crop fallback found no clean window; inpainted instead",
+      "below 1600px after 4x (932px tall); resized up on export"
+    ],
+    "source_size": [
+      193,
+      233
+    ],
+    "text": [
+      "Handloom",
+      "washcoton Ri5o0",
+      "only",
+      "Toorder whatsappus",
+      "7576865822"
+    ],
+    "mask_pct": 17.8,
+    "texture": 4.6,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      746,
+      932
+    ]
+  },
+  "hl-wash-red": {
+    "slug": "hl-wash-red",
+    "group": "products",
+    "source": "source-images/products/hl-wash-red.jpg",
+    "flags": [
+      "crop fallback found no clean window; inpainted instead",
+      "inpainted over patterned fabric; check for smears",
+      "below 1600px after 4x (965px tall); resized up on export"
+    ],
+    "source_size": [
+      193,
+      258
+    ],
+    "text": [
+      "Handloom",
+      "Washcotton Risoo",
+      "only",
+      "NDAIir",
+      "Toorderwhatsappus",
+      "3676843822"
+    ],
+    "mask_pct": 18.8,
+    "texture": 17.7,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      772,
+      965
+    ]
+  },
+  "hl-wash-wine": {
+    "slug": "hl-wash-wine",
+    "group": "products",
+    "source": "source-images/products/hl-wash-wine.jpg",
+    "flags": [
+      "crop fallback found no clean window; inpainted instead",
+      "inpainted over patterned fabric; check for smears",
+      "below 1600px after 4x (960px tall); resized up on export"
+    ],
+    "source_size": [
+      192,
+      263
+    ],
+    "text": [
+      "Handloom",
+      "washcotton?i5oo",
+      "only",
+      "NDAttire",
+      "Toorderwhtsppus",
+      "75168138"
+    ],
+    "mask_pct": 19.7,
+    "texture": 20.0,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      768,
+      960
+    ]
+  },
+  "hp-blue-floral": {
+    "slug": "hp-blue-floral",
+    "group": "products",
+    "source": "source-images/products/hp-blue-floral.jpg",
+    "flags": [
+      "crop fallback found no clean window; inpainted instead",
+      "below 1600px after 4x (965px tall); resized up on export"
+    ],
+    "source_size": [
+      193,
+      260
+    ],
+    "text": [
+      "O",
+      "Durga Pufa Special",
+      "Colleetton",
+      "trorderwhntsapps",
+      "8310866822"
+    ],
+    "mask_pct": 14.7,
+    "texture": 9.8,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      772,
+      965
+    ]
+  },
+  "hp-lavender": {
+    "slug": "hp-lavender",
+    "group": "products",
+    "source": "source-images/products/hp-lavender.jpg",
+    "flags": [],
+    "source_size": [
+      421,
+      568
+    ],
+    "text": [],
+    "mask_pct": 2.9,
+    "texture": 16.2,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      1684,
+      2105
+    ]
+  },
+  "hp-lotus-green": {
+    "slug": "hp-lotus-green",
+    "group": "products",
+    "source": "source-images/products/hp-lotus-green.jpg",
+    "flags": [
+      "crop fallback found no clean window; inpainted instead",
+      "inpainted over patterned fabric; check for smears",
+      "below 1600px after 4x (965px tall); resized up on export"
+    ],
+    "source_size": [
+      193,
+      263
+    ],
+    "text": [
+      "Durga Puia Speo",
+      "Handpantedoeoecs",
+      "re80y.todis0atch",
+      "ND Attire"
+    ],
+    "mask_pct": 12.2,
+    "texture": 14.8,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      772,
+      965
+    ]
+  },
+  "hp-pink-rose": {
+    "slug": "hp-pink-rose",
+    "group": "products",
+    "source": "source-images/products/hp-pink-rose.jpg",
+    "flags": [
+      "crop fallback found no clean window; inpainted instead",
+      "below 1600px after 4x (965px tall); resized up on export"
+    ],
+    "source_size": [
+      193,
+      258
+    ],
+    "text": [
+      "BurgaPuvsoiiuctton",
+      "O",
+      "NDAUiiS",
+      "Toaelceswhatshppus",
+      "7568805829"
+    ],
+    "mask_pct": 15.6,
+    "texture": 8.9,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      772,
+      965
+    ]
+  },
+  "hp-sky": {
+    "slug": "hp-sky",
+    "group": "products",
+    "source": "source-images/products/hp-sky.jpg",
+    "flags": [
+      "crop fallback found no clean window; inpainted instead",
+      "below 1600px after 4x (965px tall); resized up on export"
+    ],
+    "source_size": [
+      193,
+      258
+    ],
+    "text": [
+      "NDAlire",
+      "Handpaintedpairs",
+      "orderready to",
+      "dispatch for Durga",
+      "Puja"
+    ],
+    "mask_pct": 16.7,
+    "texture": 13.3,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      772,
+      965
+    ]
+  },
+  "hp-white-lotus": {
+    "slug": "hp-white-lotus",
+    "group": "products",
+    "source": "source-images/products/hp-white-lotus.jpg",
+    "flags": [
+      "crop fallback found no clean window; inpainted instead",
+      "below 1600px after 4x (960px tall); resized up on export"
+    ],
+    "source_size": [
+      192,
+      255
+    ],
+    "text": [
+      "Durga Puja Special",
+      "Handpainted Saree",
+      "ND Attire"
+    ],
+    "mask_pct": 15.6,
+    "texture": 12.4,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      768,
+      960
+    ]
+  },
+  "hp-wisteria": {
+    "slug": "hp-wisteria",
+    "group": "products",
+    "source": "source-images/products/hp-wisteria.jpg",
+    "flags": [],
+    "source_size": [
+      419,
+      568
+    ],
+    "text": [
+      "ND Attire"
+    ],
+    "mask_pct": 4.5,
+    "texture": 22.6,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      1676,
+      2095
+    ]
+  },
+  "mm-masrise": {
+    "slug": "mm-masrise",
+    "group": "products",
+    "source": "source-images/products/mm-masrise.jpg",
+    "flags": [
+      "crop fallback: kept 51% of frame",
+      "below 1600px after 4x (675px tall); resized up on export"
+    ],
+    "source_size": [
+      192,
+      233
+    ],
+    "text": [
+      "MM Masrise cotton",
+      "R999only",
+      "Toorder whatsappus"
+    ],
+    "mask_pct": 15.7,
+    "texture": 20.2,
+    "mode": "crop",
+    "output_size": [
+      540,
+      675
+    ]
+  },
+  "mm-padmini": {
+    "slug": "mm-padmini",
+    "group": "products",
+    "source": "source-images/products/mm-padmini.jpg",
+    "flags": [
+      "crop fallback found no clean window; inpainted instead",
+      "inpainted over patterned fabric; check for smears",
+      "below 1600px after 4x (965px tall); resized up on export"
+    ],
+    "source_size": [
+      193,
+      257
+    ],
+    "text": [
+      "MM PadminiCouon",
+      "PriceR999",
+      "Lruractnfatfiaas",
+      "83806837",
+      "NONNIES"
+    ],
+    "mask_pct": 19.4,
+    "texture": 23.1,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      772,
+      965
+    ]
+  },
+  "mm-wash": {
+    "slug": "mm-wash",
+    "group": "products",
+    "source": "source-images/products/mm-wash.jpg",
+    "flags": [
+      "crop fallback found no clean window; inpainted instead",
+      "inpainted over patterned fabric; check for smears"
+    ],
+    "source_size": [
+      420,
+      563
+    ],
+    "text": [
+      "MMWashcottonR8C",
+      "only",
+      "装",
+      "To order whatsapp us",
+      "7576843822"
+    ],
+    "mask_pct": 9.5,
+    "texture": 29.5,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      1680,
+      2100
+    ]
+  },
+  "of-combo": {
+    "slug": "of-combo",
+    "group": "products",
+    "source": "source-images/products/of-combo.jpg",
+    "flags": [],
+    "source_size": [
+      420,
+      568
+    ],
+    "text": [
+      "ND Atfire"
+    ],
+    "mask_pct": 3.6,
+    "texture": 25.7,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      1680,
+      2100
+    ]
+  },
+  "of-semipat": {
+    "slug": "of-semipat",
+    "group": "products",
+    "source": "source-images/products/of-semipat.jpg",
+    "flags": [],
+    "source_size": [
+      421,
+      563
+    ],
+    "text": [
+      "Dhamaka offerat",
+      "semi pat jura R900",
+      "only",
+      "To order whatsapp us",
+      "7576843822"
+    ],
+    "mask_pct": 12.0,
+    "texture": 9.7,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      1684,
+      2105
+    ]
+  },
+  "client-1": {
+    "slug": "client-1",
+    "group": "brand",
+    "source": "source-images/brand/client-1.jpg",
+    "flags": [
+      "crop fallback: kept 75% of frame",
+      "below 1600px after 4x (864px tall); resized up on export"
+    ],
+    "source_size": [
+      192,
+      260
+    ],
+    "text": [
+      "Happyclient"
+    ],
+    "mask_pct": 7.2,
+    "texture": 18.7,
+    "mode": "crop",
+    "output_size": [
+      691,
+      864
+    ]
+  },
+  "client-2": {
+    "slug": "client-2",
+    "group": "brand",
+    "source": "source-images/brand/client-2.jpg",
+    "flags": [
+      "crop fallback: kept 65% of frame",
+      "below 1600px after 4x (804px tall); resized up on export"
+    ],
+    "source_size": [
+      193,
+      257
+    ],
+    "text": [
+      "Durloveiycient",
+      "leedback",
+      "ND Afti"
+    ],
+    "mask_pct": 9.2,
+    "texture": 25.7,
+    "mode": "crop",
+    "output_size": [
+      643,
+      804
+    ]
+  },
+  "founder-studio": {
+    "slug": "founder-studio",
+    "group": "brand",
+    "source": "source-images/brand/founder-studio.jpg",
+    "flags": [
+      "below 1600px after 4x (896px tall); resized up on export"
+    ],
+    "source_size": [
+      193,
+      224
+    ],
+    "text": [],
+    "mask_pct": 3.5,
+    "texture": 11.8,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      717,
+      896
+    ]
+  },
+  "handpainting-process": {
+    "slug": "handpainting-process",
+    "group": "brand",
+    "source": "source-images/brand/handpainting-process.jpg",
+    "flags": [
+      "crop fallback: kept 64% of frame",
+      "below 1600px after 4x (804px tall); resized up on export"
+    ],
+    "source_size": [
+      193,
+      260
+    ],
+    "text": [
+      "Ourvirallavender",
+      "colour handpainted",
+      "mekhela sador22nd",
+      "order"
+    ],
+    "mask_pct": 14.4,
+    "texture": 10.4,
+    "mode": "crop",
+    "output_size": [
+      643,
+      804
+    ]
+  },
+  "orders-packed": {
+    "slug": "orders-packed",
+    "group": "brand",
+    "source": "source-images/brand/orders-packed.jpg",
+    "flags": [],
+    "source_size": [
+      420,
+      568
+    ],
+    "text": [
+      "ND Atfire"
+    ],
+    "mask_pct": 3.6,
+    "texture": 25.7,
+    "inpaint": "fsr",
+    "mode": "inpaint",
+    "output_size": [
+      1680,
+      2100
+    ]
+  }
+}

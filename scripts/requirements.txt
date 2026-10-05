@@ -1,0 +1,10 @@
+# Image pipeline (python 3.10+). Install into .venv:
+#   python3 -m venv .venv && .venv/bin/pip install -r scripts/requirements.txt
+# All model weights ship inside these wheels — nothing is downloaded at runtime.
+numpy
+pillow
+opencv-contrib-python-headless   # FSR inpainting (xphoto) + saliency
+rapidocr-onnxruntime             # PP-OCRv4 text detection (bundled ONNX models)
+ncnn                             # CPU inference for Real-ESRGAN
+realesrgan-ncnn-py               # only used for its bundled Real-ESRGAN x4plus weights
+vtracer                          # logo tracing
