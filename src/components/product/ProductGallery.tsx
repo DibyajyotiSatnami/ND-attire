@@ -1,16 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { ViewTransition, useCallback, useRef, useState } from "react";
+import { ViewTransition, useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, m } from "motion/react";
 import { CloseIcon } from "@/components/Icons";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { img } from "@/lib/images";
 import { ease } from "@/lib/motion";
 
-type Props = { slug: string; images: string[]; alt: string };
+type Props = {
+  slug: string;
+  images: string[];
+  alt: string;
+  /** Per-image alt text (falls back to `alt`). */
+  alts?: (string | undefined)[];
+  /** Show this image, e.g. when a colour is picked. */
+  focus?: number;
+};
 
-export function ProductGallery({ slug, images, alt }: Props) {
+export function ProductGallery({ slug, images, alt, alts = [], focus }: Props) {
   const [active, setActive] = useState(0);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const track = useRef<HTMLDivElement>(null);
@@ -19,8 +27,17 @@ export function ProductGallery({ slug, images, alt }: Props) {
   const go = (i: number) => {
     setActive(i);
     const el = track.current;
-    if (el) el.scrollTo({ left: el.clientWidth * i, behavior: "smooth" });
+    if (!el) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollTo({ left: el.clientWidth * i, behavior: reduce ? "auto" : "smooth" });
   };
+  // scroll only: the track's onScroll keeps `active` in step
+  useEffect(() => {
+    const el = track.current;
+    if (!el || focus === undefined || focus < 0) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollTo({ left: el.clientWidth * focus, behavior: reduce ? "auto" : "smooth" });
+  }, [focus]);
 
   return (
     <div className="lg:sticky lg:top-28 lg:flex lg:gap-4">
@@ -57,7 +74,7 @@ export function ProductGallery({ slug, images, alt }: Props) {
               <ZoomFrame
                 src={pic.src}
                 blur={pic.blurDataURL}
-                alt={i === 0 ? alt : `${alt}, view ${i + 1}`}
+                alt={alts[i] ?? (i === 0 ? alt : `${alt}, view ${i + 1}`)}
                 priority={i === 0}
                 onOpen={() => setLightbox(i)}
               />

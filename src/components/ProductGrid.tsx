@@ -1,76 +1,93 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { AnimatePresence, m, useInView } from "motion/react";
 import { ProductCard } from "@/components/ProductCard";
-import { categories, isCategory, type CategorySlug, type Product } from "@/data/products";
+import { CloseIcon, FilterIcon, SearchIcon, WhatsAppIcon } from "@/components/Icons";
+import { categories, categoryLabel, type Product } from "@/data/products";
 import { ease, spring } from "@/lib/motion";
 import { SORTS, sortProducts, type SortKey } from "@/lib/sort";
+import {
+  EMPTY,
+  PRICE_BANDS,
+  activeCount,
+  applyFilters,
+  filterOptions,
+  readFilters,
+  writeFilters,
+  type Filters,
+} from "@/lib/filters";
+import { waLink } from "@/lib/whatsapp";
+import { site } from "@/config/site";
 
-const setParam = (key: string, value: string | null) => {
-  const url = new URL(window.location.href);
-  if (value) url.searchParams.set(key, value);
-  else url.searchParams.delete(key);
-  // Next.js syncs native history updates with useSearchParams
-  window.history.replaceState(null, "", url.pathname + url.search);
-};
-
-type Filter = { category: CategorySlug | "all"; sort: SortKey };
-
-const readParams = (params: URLSearchParams): Filter => {
-  const raw = params.get("category");
-  const sortRaw = params.get("sort") as SortKey | null;
-  return {
-    category: isCategory(raw) ? raw : "all",
-    sort: SORTS.some((s) => s.key === sortRaw) ? sortRaw! : "featured",
-  };
+type Props = {
+  products: Product[];
+  /** On a collection page the category is fixed and its chips are hidden. */
+  fixedCategory?: boolean;
 };
 
 /**
- * Reads ?category= and ?sort= after hydration. Kept in its own Suspense
- * boundary so the grid itself is server-rendered (useSearchParams would
- * otherwise turn the whole grid into a client-only render).
+ * Reads the query string after hydration. Kept in its own Suspense boundary so
+ * the grid itself is server-rendered (useSearchParams would otherwise turn the
+ * whole grid into a client-only render).
  */
-function SyncParams({ onChange }: { onChange: (f: Filter) => void }) {
+function SyncParams({ onChange }: { onChange: (f: Filters) => void }) {
   const params = useSearchParams();
-  useEffect(() => onChange(readParams(params)), [params, onChange]);
+  useEffect(() => onChange(readFilters(params)), [params, onChange]);
   return null;
 }
 
-/** Shop grid with category chips (synced to ?category=) and sort (?sort=). */
-export function ShopGrid({ products }: { products: Product[] }) {
-  const [{ category, sort }, setFilter] = useState<Filter>({ category: "all", sort: "featured" });
+const toggle = (list: string[], v: string) => (list.includes(v) ? list.filter((x) => x !== v) : [...list, v]);
+
+/** Product grid with search, category chips, colour / size / price / availability filters and sort, all in the URL. */
+export function ShopGrid({ products, fixedCategory = false }: Props) {
+  const [f, setF] = useState<Filters>(EMPTY);
+  const [panel, setPanel] = useState(false);
   const sync = useCallback(
-    (f: Filter) => setFilter((cur) => (cur.category === f.category && cur.sort === f.sort ? cur : f)),
-    [],
+    (next: Filters) => {
+      if (fixedCategory) next = { ...next, category: "all" };
+      setF((cur) => (writeFilters(cur) === writeFilters(next) ? cur : next));
+    },
+    [fixedCategory],
   );
 
-  const list = useMemo(
-    () => sortProducts(category === "all" ? products : products.filter((p) => p.category === category), sort),
-    [products, category, sort],
-  );
+  const update = (patch: Partial<Filters>) => {
+    const next = { ...f, ...patch };
+    setF(next);
+    // Next.js syncs native history updates with useSearchParams
+    window.history.replaceState(null, "", window.location.pathname + writeFilters(next, fixedCategory));
+  };
+
+  const options = useMemo(() => filterOptions(products), [products]);
+  const list = useMemo(() => sortProducts(applyFilters(products, f), f.sort), [products, f]);
+  const active = activeCount(f);
+  const any = active > 0 || f.q.trim() !== "" || f.category !== "all";
+  const clear = () => update({ ...EMPTY, sort: f.sort });
 
   return (
     <>
       <Suspense fallback={null}>
         <SyncParams onChange={sync} />
       </Suspense>
-      <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+
+      <SearchField value={f.q} onChange={(q) => update({ q })} />
+
+      {!fixedCategory && (
         <div
           role="group"
           aria-label="Filter by category"
-          className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:px-0"
+          className="no-scrollbar -mx-4 mt-5 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:px-0"
         >
           {[{ slug: "all", label: "All" } as const, ...categories].map((c) => {
-            const on = c.slug === category;
+            const on = c.slug === f.category;
             return (
               <button
                 key={c.slug}
                 type="button"
                 aria-pressed={on}
-                onClick={() => setParam("category", c.slug === "all" ? null : c.slug)}
-                className={`relative h-10 shrink-0 rounded-full px-4 text-[0.95rem] font-medium transition-colors duration-300 ${
+                onClick={() => update({ category: c.slug })}
+                className={`relative h-11 shrink-0 rounded-full px-4 text-[0.95rem] font-medium transition-colors duration-300 ${
                   on ? "text-paper" : "text-ink shadow-[inset_0_0_0_1px_var(--line)] hover:text-maroon"
                 }`}
               >
@@ -86,30 +103,215 @@ export function ShopGrid({ products }: { products: Product[] }) {
             );
           })}
         </div>
-        <SortSelect value={sort} onChange={(v) => setParam("sort", v === "featured" ? null : v)} />
+      )}
+
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-y border-line py-3">
+        <button
+          type="button"
+          aria-expanded={panel}
+          aria-controls="filter-panel"
+          onClick={() => setPanel((v) => !v)}
+          className="inline-flex h-11 items-center gap-2 rounded-full px-4 font-medium shadow-[inset_0_0_0_1px_var(--line)] transition-colors hover:text-maroon"
+        >
+          <FilterIcon width={18} height={18} />
+          Filters
+          {active > 0 && (
+            <span className="inline-grid h-6 min-w-6 place-items-center rounded-full bg-maroon px-1.5 text-xs font-semibold text-paper">
+              {active}
+            </span>
+          )}
+        </button>
+        <p className="order-last w-full text-sm text-muted sm:order-none sm:w-auto" aria-live="polite">
+          {list.length} {list.length === 1 ? "piece" : "pieces"}
+        </p>
+        <SortSelect value={f.sort} onChange={(sort) => update({ sort })} />
       </div>
-      <p className="sr-only" aria-live="polite">
-        {list.length} {list.length === 1 ? "piece" : "pieces"} shown
-      </p>
-      <Grid products={list} />
+
+      <AnimatePresence initial={false}>
+        {panel && (
+          <m.div
+            id="filter-panel"
+            key="panel"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease }}
+            className="overflow-hidden"
+          >
+            <div className="grid gap-7 border-b border-line py-6 md:grid-cols-2 lg:grid-cols-4">
+              {options.colours.length > 1 && (
+                <FilterGroup title="Colour">
+                  {options.colours.map((c) => (
+                    <Chip
+                      key={c.name}
+                      on={f.colours.includes(c.name)}
+                      onClick={() => update({ colours: toggle(f.colours, c.name) })}
+                    >
+                      <span
+                        aria-hidden
+                        className="size-4 rounded-full shadow-[inset_0_0_0_1px_rgb(0_0_0/0.18)]"
+                        style={{ background: c.swatch }}
+                      />
+                      {c.name}
+                    </Chip>
+                  ))}
+                </FilterGroup>
+              )}
+              {options.prices.length > 1 && (
+                <FilterGroup title="Price">
+                  {options.prices.map((b) => (
+                    <Chip
+                      key={b.key}
+                      on={f.price === b.key}
+                      onClick={() => update({ price: f.price === b.key ? null : b.key })}
+                    >
+                      {b.label}
+                    </Chip>
+                  ))}
+                </FilterGroup>
+              )}
+              {options.sizes.length > 0 && (
+                <FilterGroup title="Size">
+                  {options.sizes.map((s) => (
+                    <Chip key={s} on={f.sizes.includes(s)} onClick={() => update({ sizes: toggle(f.sizes, s) })}>
+                      {s}
+                    </Chip>
+                  ))}
+                </FilterGroup>
+              )}
+              {options.hasSoldOut && (
+                <FilterGroup title="Availability">
+                  <Chip on={f.available} onClick={() => update({ available: !f.available })}>
+                    Available only
+                  </Chip>
+                </FilterGroup>
+              )}
+            </div>
+          </m.div>
+        )}
+      </AnimatePresence>
+
+      {any && (
+        <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
+          {f.q.trim() && <ActiveTag onRemove={() => update({ q: "" })}>“{f.q.trim()}”</ActiveTag>}
+          {!fixedCategory && f.category !== "all" && (
+            <ActiveTag onRemove={() => update({ category: "all" })}>{categoryLabel(f.category)}</ActiveTag>
+          )}
+          {f.colours.map((c) => (
+            <ActiveTag key={c} onRemove={() => update({ colours: toggle(f.colours, c) })}>
+              {c}
+            </ActiveTag>
+          ))}
+          {f.sizes.map((s) => (
+            <ActiveTag key={s} onRemove={() => update({ sizes: toggle(f.sizes, s) })}>
+              Size {s}
+            </ActiveTag>
+          ))}
+          {f.price && (
+            <ActiveTag onRemove={() => update({ price: null })}>
+              {PRICE_BANDS.find((b) => b.key === f.price)!.label}
+            </ActiveTag>
+          )}
+          {f.available && <ActiveTag onRemove={() => update({ available: false })}>Available only</ActiveTag>}
+          <button type="button" onClick={clear} className="link-underline ml-1 min-h-9 font-medium text-maroon">
+            Clear all
+          </button>
+        </div>
+      )}
+
+      {list.length === 0 ? (
+        <div className="mx-auto max-w-md py-20 text-center">
+          <p className="display text-xl text-maroon">No pieces match</p>
+          <p className="mt-3 text-muted">
+            {f.q.trim() ? `Nothing found for “${f.q.trim()}”` : "Nothing fits these filters"}. Try fewer filters, or ask
+            us on WhatsApp: we may have it in the studio.
+          </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <button type="button" onClick={clear} className="btn btn-maroon">
+              Clear filters
+            </button>
+            <a
+              href={waLink(
+                `Hi ${site.name}, I'm looking for ${f.q.trim() ? `“${f.q.trim()}”` : "a piece"}. Do you have something like this?`,
+              )}
+              target="_blank"
+              rel="noopener"
+              className="btn btn-wa"
+            >
+              <WhatsAppIcon /> Ask on WhatsApp
+            </a>
+          </div>
+        </div>
+      ) : (
+        <Grid products={list} />
+      )}
     </>
   );
 }
 
-/** A category page: fixed category, sort only. */
-export function CollectionGrid({ products }: { products: Product[] }) {
-  const [sort, setSort] = useState<SortKey>("featured");
-  const list = useMemo(() => sortProducts(products, sort), [products, sort]);
+function SearchField({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const id = useId();
   return (
-    <>
-      <div className="flex items-center justify-between gap-4">
-        <p className="text-muted">
-          {products.length} {products.length === 1 ? "piece" : "pieces"}
-        </p>
-        <SortSelect value={sort} onChange={setSort} />
-      </div>
-      <Grid products={list} />
-    </>
+    <form role="search" onSubmit={(e) => e.preventDefault()} className="relative">
+      <label htmlFor={id} className="sr-only">
+        Search products
+      </label>
+      <SearchIcon
+        width={20}
+        height={20}
+        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted"
+      />
+      <input
+        id={id}
+        type="search"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="Search by name, colour or fabric"
+        autoComplete="off"
+        enterKeyHint="search"
+        className="h-12 w-full rounded-full border border-line bg-surface pl-12 pr-4 text-base text-ink outline-none transition-colors placeholder:text-muted/80 focus-visible:border-muga"
+      />
+    </form>
+  );
+}
+
+function FilterGroup({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <fieldset>
+      <legend className="mb-3 font-semibold">{title}</legend>
+      <div className="flex flex-wrap gap-2">{children}</div>
+    </fieldset>
+  );
+}
+
+function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <button
+      type="button"
+      aria-pressed={on}
+      onClick={onClick}
+      className={`inline-flex h-10 items-center gap-2 rounded-full px-3.5 text-[0.95rem] transition-colors duration-300 ${
+        on ? "bg-maroon text-paper" : "shadow-[inset_0_0_0_1px_var(--line)] hover:text-maroon"
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
+
+function ActiveTag({ children, onRemove }: { children: React.ReactNode; onRemove: () => void }) {
+  return (
+    <span className="inline-flex h-9 items-center gap-1 rounded-full bg-sunk pl-3 pr-1">
+      {children}
+      <button
+        type="button"
+        onClick={onRemove}
+        aria-label={`Remove filter: ${typeof children === "string" ? children : "search"}`}
+        className="grid size-7 place-items-center rounded-full text-muted hover:text-maroon"
+      >
+        <CloseIcon width={14} height={14} />
+      </button>
+    </span>
   );
 }
 

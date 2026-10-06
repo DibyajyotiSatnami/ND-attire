@@ -12,7 +12,8 @@
     "images:export": "node scripts/export-images.mjs",
     "logo": ".venv/bin/python scripts/process-logo.py",
     "screens": "node scripts/screens.mjs",
-    "format": "prettier --write src scripts/*.mjs"
+    "format": "prettier --write src scripts/*.mjs",
+    "build:pages": "GITHUB_PAGES=true next build"
   },
   "dependencies": {
     "motion": "^14.0.0",

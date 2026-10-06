@@ -8,6 +8,7 @@ import { CloseIcon, MinusIcon, PlusIcon, WhatsAppIcon } from "@/components/Icons
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { selectLines, useBag } from "@/store/bag";
 import { checkout } from "@/lib/checkout";
+import { subtotal } from "@/lib/whatsapp";
 import { img } from "@/lib/images";
 import { rupee } from "@/lib/format";
 import { ease, spring } from "@/lib/motion";
@@ -60,8 +61,16 @@ function BagContents({ onClose }: { onClose: () => void }) {
   const setQty = useBag((s) => s.setQty);
   const remove = useBag((s) => s.remove);
   const lines = selectLines(items);
-  const total = lines.reduce((s, l) => s + l.price * l.qty, 0);
-  const orderLines = lines.map((l) => ({ name: l.name, qty: l.qty, price: l.price }));
+  const total = subtotal(lines);
+  const unpriced = lines.some((l) => l.price === null);
+  const orderLines = lines.map(({ slug, name, qty, price, colour, size }) => ({
+    slug,
+    name,
+    qty,
+    price,
+    colour,
+    size,
+  }));
   const can = checkout.canSubmit(orderLines, customer);
   const href = checkout.href?.(orderLines, customer);
 
@@ -99,7 +108,7 @@ function BagContents({ onClose }: { onClose: () => void }) {
                 const pic = img(l.image);
                 return (
                   <m.li
-                    key={l.slug}
+                    key={l.key}
                     layout
                     initial={{ opacity: 0, x: 24 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -126,13 +135,27 @@ function BagContents({ onClose }: { onClose: () => void }) {
                         >
                           {l.name}
                         </Link>
-                        <span className="display shrink-0 text-gamosa">{rupee(l.price * l.qty)}</span>
+                        {l.price === null ? (
+                          <span className="shrink-0 text-sm font-medium text-tea">Price on request</span>
+                        ) : (
+                          <span className="display shrink-0 text-gamosa">{rupee(l.price * l.qty)}</span>
+                        )}
                       </div>
+                      {(l.colour || l.size) && (
+                        <p className="mt-1 text-sm text-muted">
+                          {[l.colour && `Colour: ${l.colour}`, l.size && `Size: ${l.size}`].filter(Boolean).join(" · ")}
+                        </p>
+                      )}
                       <div className="mt-3 flex items-center justify-between">
-                        <Stepper value={l.qty} label={l.name} removeAtMin onChange={(q) => setQty(l.slug, q)} />
+                        <Stepper
+                          value={l.qty}
+                          label={l.colour ? `${l.name}, ${l.colour}` : l.name}
+                          removeAtMin
+                          onChange={(q) => setQty(l.key, q)}
+                        />
                         <button
                           type="button"
-                          onClick={() => remove(l.slug)}
+                          onClick={() => remove(l.key)}
                           className="link-underline text-sm text-muted hover:text-gamosa"
                           aria-label={`Remove ${l.name}`}
                         >
@@ -146,17 +169,11 @@ function BagContents({ onClose }: { onClose: () => void }) {
             </AnimatePresence>
           </ul>
         )}
-      </div>
-
-      {lines.length > 0 && (
-        <div className="border-t border-line px-6 pt-5 pb-6">
-          <div className="flex items-baseline justify-between">
-            <span className="font-medium">Total</span>
-            <AnimatedRupee value={total} className="display text-xl text-gamosa" />
-          </div>
-          <div className="mt-4 grid gap-3">
+        {lines.length > 0 && (
+          <div className="grid gap-3 border-t border-line py-5">
+            <p className="text-sm font-medium">Add your details to the message</p>
             <label className="grid gap-1.5">
-              <span className="text-sm text-muted">Your name</span>
+              <span className="text-sm text-muted">Your name (optional)</span>
               <input
                 value={customer.name}
                 onChange={(e) => setCustomer({ name: e.target.value })}
@@ -165,7 +182,7 @@ function BagContents({ onClose }: { onClose: () => void }) {
               />
             </label>
             <label className="grid gap-1.5">
-              <span className="text-sm text-muted">Delivery address</span>
+              <span className="text-sm text-muted">Delivery address (optional)</span>
               <textarea
                 value={customer.address}
                 onChange={(e) => setCustomer({ address: e.target.value })}
@@ -175,8 +192,21 @@ function BagContents({ onClose }: { onClose: () => void }) {
               />
             </label>
           </div>
-          <p className="mt-3 text-sm text-muted">
-            {site.deliveryTimes ? `${site.deliveryTimes}. ` : ""}Delivery charges are confirmed on WhatsApp.
+        )}
+      </div>
+
+      {lines.length > 0 && (
+        <div className="border-t border-line px-6 pt-5 pb-6">
+          {total > 0 && (
+            <div className="flex items-baseline justify-between">
+              <span className="font-medium">{unpriced ? "Subtotal (priced items)" : "Subtotal"}</span>
+              <AnimatedRupee value={total} className="display text-xl text-gamosa" />
+            </div>
+          )}
+          <p className="mt-2 rounded-lg bg-sunk px-4 py-3 text-sm text-ink/85">
+            This is not a checkout. Availability, delivery charges and the final total will be confirmed by {site.name}{" "}
+            on WhatsApp.
+            {site.deliveryTimes ? ` ${site.deliveryTimes}.` : ""}
           </p>
           <a href={href} target="_blank" rel="noopener" aria-disabled={!can} className="btn btn-wa-solid mt-4 w-full">
             <WhatsAppIcon /> {checkout.label}

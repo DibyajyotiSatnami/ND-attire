@@ -11,7 +11,7 @@ const COVER: Record<CategorySlug, string> = {
   handpainted: "hp-white-lotus",
   bridal: "hp-wisteria",
   designer: "ds-pink",
-  handloom: "hl-wash-red",
+  handloom: "hl-staple-cotton",
   everyday: "mm-padmini",
   offers: "of-semipat",
 };
@@ -20,7 +20,7 @@ export function CollectionTiles() {
   return (
     <section aria-labelledby="collections-title" className="wrap py-16 lg:py-24">
       <h2 id="collections-title" className="display text-2xl text-maroon md:text-3xl">
-        Shop by collection
+        Shop by category
       </h2>
       <m.ul
         className="mt-10 grid grid-cols-2 gap-x-3 gap-y-10 sm:gap-x-6 lg:grid-cols-3 lg:gap-y-14"

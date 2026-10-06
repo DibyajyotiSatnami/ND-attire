@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CollectionGrid } from "@/components/ProductGrid";
+import { ShopGrid } from "@/components/ProductGrid";
 import { categories, isCategory, productsIn } from "@/data/products";
 
 export const dynamicParams = false;
@@ -37,7 +37,7 @@ export default async function CollectionPage({ params }: PageProps<"/collections
       <p className="measure mt-3 text-muted">{c.blurb}</p>
       <h2 className="sr-only">{c.label} pieces</h2>
       <div className="mt-8">
-        <CollectionGrid products={productsIn(c.slug)} />
+        <ShopGrid products={productsIn(c.slug)} fixedCategory />
       </div>
       <nav aria-label="Other collections" className="mt-20 border-t border-line pt-10">
         <h2 className="display text-xl text-maroon">More collections</h2>

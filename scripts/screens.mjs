@@ -14,8 +14,12 @@ const pages = [
   ["collection-handpainted", "/collections/handpainted"],
   ["product-priced", "/product/ds-seagreen"],
   ["product-on-request", "/product/hp-lavender"],
-  ["product-sold-out", "/product/hl-staple-purple"],
+  ["product-colours", "/product/hl-wash-cotton"],
+  ["product-sold-out-colour", "/product/hl-staple-cotton?colour=purple"],
+  ["shop-search-empty", "/shop?q=velvet"],
   ["about", "/about"],
+  ["contact", "/contact"],
+  ["policy-delivery", "/policies/delivery"],
   ["404", "/nope"],
 ];
 const viewports = [
@@ -58,7 +62,12 @@ for (const scheme of schemes) {
         window.scrollTo(0, 0);
       });
       await page.waitForTimeout(600);
-      await page.screenshot({ path: `${OUT}${name}-${vname}-${scheme}.jpg`, fullPage: true, type: "jpeg", quality: 80 });
+      await page.screenshot({
+        path: `${OUT}${name}-${vname}-${scheme}.jpg`,
+        fullPage: true,
+        type: "jpeg",
+        quality: 80,
+      });
       await page.close();
     }
     await ctx.close();
