@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Mukta, Young_Serif } from "next/font/google";
 import { Header } from "@/components/Header";
+import { Announcement } from "@/components/Announcement";
 import { Footer } from "@/components/Footer";
 import { BagDrawer } from "@/components/BagDrawer";
 import { FlyToBag } from "@/components/FlyToBag";
@@ -73,6 +74,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           Skip to content
         </a>
         <Providers>
+          <Announcement />
           <Header />
           <main id="main" className="flex-1">
             {children}

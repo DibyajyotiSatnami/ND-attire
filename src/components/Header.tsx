@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, m } from "motion/react";
-import { BagIcon, CloseIcon, InstagramIcon, MenuIcon, WhatsAppIcon } from "@/components/Icons";
+import { BagIcon, CloseIcon, InstagramIcon, MenuIcon, SearchIcon, WhatsAppIcon } from "@/components/Icons";
+import { SearchDialog } from "@/components/SearchDialog";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { selectCount, useBag } from "@/store/bag";
 import { site } from "@/config/site";
@@ -15,20 +16,22 @@ import { ease, spring } from "@/lib/motion";
 const NAV = [
   { href: "/shop", label: "Shop" },
   { href: "/collections/handpainted", label: "Handpainted" },
-  { href: "/#how", label: "How to order" },
   { href: "/about", label: "Our story" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Header() {
   const pathname = usePathname();
   const [menu, setMenu] = useState(false);
+  const [search, setSearch] = useState(false);
 
   const closeMenu = useCallback(() => setMenu(false), []);
+  const closeSearch = useCallback(() => setSearch(false), []);
 
   return (
     <>
       <header className="sticky top-0 z-30 bg-paper/92 backdrop-blur-md supports-[backdrop-filter]:bg-paper/85">
-        <div className="wrap flex h-[68px] items-center gap-4 lg:h-[76px]">
+        <div className="wrap flex h-[68px] items-center gap-1 sm:gap-3 lg:h-[76px]">
           <Link href="/" className="flex items-center gap-3 rounded-full" aria-label="ND Attire home">
             <Image
               src="/brand/logo-mark.png"
@@ -62,7 +65,16 @@ export function Header() {
             </ul>
           </nav>
 
-          <BagButton className="ml-auto md:ml-6" />
+          <button
+            type="button"
+            onClick={() => setSearch(true)}
+            aria-haspopup="dialog"
+            aria-label="Search products"
+            className="ml-auto grid size-11 place-items-center rounded-full text-maroon transition-colors duration-300 hover:bg-maroon/8 md:ml-6"
+          >
+            <SearchIcon width={22} height={22} />
+          </button>
+          <BagButton />
           <button
             type="button"
             className="-mr-2 grid size-11 place-items-center rounded-full text-maroon md:hidden"
@@ -80,6 +92,7 @@ export function Header() {
       </header>
       {/* outside <header>: its backdrop-filter would otherwise contain this fixed overlay */}
       <MobileMenu open={menu} onClose={closeMenu} pathname={pathname} />
+      <SearchDialog open={search} onClose={closeSearch} />
     </>
   );
 }

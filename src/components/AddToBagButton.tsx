@@ -1,64 +1,92 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, m } from "motion/react";
-import { CheckIcon, WhatsAppIcon } from "@/components/Icons";
-import { addToBag, useBag } from "@/store/bag";
-import { askPriceLink } from "@/lib/whatsapp";
-import type { Product } from "@/data/products";
+import { CheckIcon } from "@/components/Icons";
+import { addToBag, useBag, lineKey, type Variant } from "@/store/bag";
+import { isSoldOut, needsChoice, type Product } from "@/data/products";
 
-type Props = {
+/** The variant used when the customer has nothing to choose. */
+export const defaultVariant = (p: Product): Variant => ({
+  colour: p.colours.length === 1 ? p.colours[0].name : null,
+  size: p.sizes?.length === 1 ? p.sizes[0] : null,
+});
+
+type CardProps = {
   product: Product;
-  qty?: number;
   /** Element the thumbnail flies from. */
   flyFrom?: () => Element | null;
   className?: string;
-  size?: "sm" | "lg";
-  /** Solid WhatsApp style, for use over imagery. */
+  /** Solid style, for use over imagery. */
   solid?: boolean;
 };
 
-/** "Add to bag" for priced pieces, "Ask price" (WhatsApp) for price-on-request, disabled when sold out. */
-export function ProductAction({ product, qty = 1, flyFrom, className = "", size = "sm", solid = false }: Props) {
-  const inBag = useBag((s) => (s.items[product.slug] ?? 0) > 0);
-  const [state, setState] = useState<"idle" | "added">("idle");
-  const timer = useRef<number>(undefined);
-  useEffect(() => () => window.clearTimeout(timer.current), []);
-  const sz = size === "lg" ? "w-full" : "min-h-10 px-4 text-[0.95rem]";
-
-  if (product.soldOut) {
+/** Product card action: "Add to bag", "Choose options" when a colour or size must be picked, or "Sold out". */
+export function ProductAction({ product, flyFrom, className = "", solid = false }: CardProps) {
+  const sz = "min-h-10 px-4 text-[0.95rem]";
+  if (isSoldOut(product)) {
     return (
       <button type="button" disabled className={`btn btn-maroon ${sz} ${className}`}>
         Sold out
       </button>
     );
   }
-  if (product.price === null) {
+  if (needsChoice(product)) {
     return (
-      <a
-        href={askPriceLink(product)}
-        target="_blank"
-        rel="noopener"
-        className={`btn ${solid ? "btn-wa-solid" : "btn-wa"} ${sz} ${className}`}
-        aria-label={size === "sm" ? `Ask price of ${product.name} on WhatsApp` : undefined}
+      <Link
+        href={`/product/${product.slug}`}
+        className={`btn ${solid ? "btn-maroon" : "btn-ghost"} ${sz} ${className}`}
+        aria-label={`Choose options for ${product.name}`}
       >
-        <WhatsAppIcon width={18} height={18} />
-        {size === "lg" ? "Ask price on WhatsApp" : "Ask price"}
-      </a>
+        Choose options
+      </Link>
     );
   }
+  return (
+    <AddButton
+      product={product}
+      variant={defaultVariant(product)}
+      qty={1}
+      flyFrom={flyFrom}
+      className={`${sz} ${className}`}
+      compact
+    />
+  );
+}
+
+type AddProps = {
+  product: Product;
+  variant: Variant;
+  qty: number;
+  flyFrom?: () => Element | null;
+  className?: string;
+  /** Card size: the accessible name includes the product. */
+  compact?: boolean;
+  /** Run before adding; return false to stop (e.g. a required choice is missing). */
+  validate?: () => boolean;
+};
+
+export function AddButton({ product, variant, qty, flyFrom, className = "", compact, validate }: AddProps) {
+  const inBag = useBag((s) => (s.items[lineKey(product.slug, variant)] ?? 0) > 0);
+  const [state, setState] = useState<"idle" | "added">("idle");
+  const timer = useRef<number>(undefined);
+  useEffect(() => () => window.clearTimeout(timer.current), []);
+  const image = product.colours.find((c) => c.name === variant.colour)?.image ?? product.images[0];
+
   const label = state === "added" ? "Added to bag" : inBag ? "Add another" : "Add to bag";
   return (
     <button
       type="button"
       onClick={() => {
-        addToBag(product.slug, qty, product.images[0], flyFrom?.() ?? null);
+        if (validate && !validate()) return;
+        addToBag(product.slug, variant, qty, image, flyFrom?.() ?? null);
         setState("added");
         window.clearTimeout(timer.current);
         timer.current = window.setTimeout(() => setState("idle"), 1400);
       }}
-      aria-label={size === "sm" ? `${label}: ${product.name}` : undefined}
-      className={`btn ${state === "added" ? "bg-tea text-paper" : "btn-maroon"} relative overflow-hidden ${sz} ${className}`}
+      aria-label={compact ? `${label}: ${product.name}` : undefined}
+      className={`btn ${state === "added" ? "bg-tea text-paper" : "btn-maroon"} relative overflow-hidden ${className}`}
     >
       <AnimatePresence mode="popLayout" initial={false}>
         <m.span

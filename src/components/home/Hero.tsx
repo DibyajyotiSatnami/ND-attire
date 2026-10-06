@@ -69,7 +69,7 @@ export function Hero() {
         </p>
         <div className="intro-fade mt-8 flex flex-wrap gap-3">
           <Link href="/shop" className="btn btn-primary">
-            Shop the collection
+            Explore Collection
           </Link>
           <a href={waHello()} target="_blank" rel="noopener" className="btn btn-wa">
             <WhatsAppIcon /> Order on WhatsApp

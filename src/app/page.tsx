@@ -1,26 +1,27 @@
 import { Hero } from "@/components/home/Hero";
-import { FeaturedCarousel } from "@/components/home/FeaturedCarousel";
+import { NewArrivals } from "@/components/home/NewArrivals";
 import { CollectionTiles } from "@/components/home/CollectionTiles";
+import { FeaturedCollection } from "@/components/home/FeaturedCollection";
 import { HowToOrder } from "@/components/home/HowToOrder";
 import { FounderStory } from "@/components/home/FounderStory";
 import { ClientsStrip } from "@/components/home/ClientsStrip";
-import { InstagramCta } from "@/components/home/InstagramCta";
+import { InstagramGallery } from "@/components/home/InstagramGallery";
 import { WeaveDivider } from "@/components/WovenBand";
-import { products } from "@/data/products";
+import { newArrivals } from "@/data/products";
 
 export default function Home() {
-  const featured = products.filter((p) => p.featured);
   return (
     <>
       <Hero />
-      <FeaturedCarousel products={featured} />
+      <NewArrivals products={newArrivals()} />
       <WeaveDivider />
       <CollectionTiles />
-      <HowToOrder />
+      <FeaturedCollection />
       <FounderStory />
-      <WeaveDivider className="mt-6" />
+      <HowToOrder />
       <ClientsStrip />
-      <InstagramCta />
+      <WeaveDivider />
+      <InstagramGallery />
     </>
   );
 }

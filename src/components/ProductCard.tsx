@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ViewTransition, useRef } from "react";
 import { ProductAction } from "@/components/AddToBagButton";
 import { Price } from "@/components/Price";
-import { isHandpainted, type Product } from "@/data/products";
+import { isHandpainted, isSoldOut, type Product } from "@/data/products";
 import { img } from "@/lib/images";
 
 type Props = {
@@ -24,6 +24,8 @@ export function ProductCard({
   const cover = img(product.images[0]);
   const second = product.images[1] ? img(product.images[1]) : null;
   const href = `/product/${product.slug}`;
+  const soldOut = isSoldOut(product);
+  const colourNote = product.colours.some((c) => c.soldOut) && !soldOut ? "Some colours sold out" : null;
 
   return (
     <article className="group relative flex flex-col">
@@ -54,13 +56,13 @@ export function ProductCard({
           </ViewTransition>
         </Link>
 
-        {(product.soldOut || isHandpainted(product)) && (
+        {(soldOut || isHandpainted(product)) && (
           <span
             className={`pointer-events-none absolute left-3 top-3 rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-              product.soldOut ? "bg-ink text-paper" : "bg-surface/95 text-tea"
+              soldOut ? "bg-ink text-paper" : "bg-surface/95 text-tea"
             }`}
           >
-            {product.soldOut ? "Sold out" : "Handpainted"}
+            {soldOut ? "Sold out" : "Handpainted"}
           </span>
         )}
 
@@ -77,6 +79,28 @@ export function ProductCard({
           </Link>
         </h3>
         <p className="mt-1 line-clamp-2 text-sm text-muted">{product.description}</p>
+        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+          <span className={`inline-flex items-center gap-1.5 font-medium ${soldOut ? "text-muted" : "text-tea"}`}>
+            <span aria-hidden className={`size-1.5 rounded-full ${soldOut ? "bg-muted" : "bg-tea"}`} />
+            {soldOut ? "Sold out" : (colourNote ?? "Available")}
+          </span>
+          {product.colours.length > 1 && (
+            <span className="inline-flex items-center gap-1" aria-label={`${product.colours.length} colours`}>
+              {product.colours.map((c) => (
+                <span
+                  key={c.name}
+                  title={c.name}
+                  aria-hidden
+                  className="size-3 rounded-full shadow-[inset_0_0_0_1px_rgb(0_0_0/0.15)]"
+                  style={{ background: c.swatch }}
+                />
+              ))}
+              <span className="ml-1 text-muted" aria-hidden>
+                {product.colours.length} colours
+              </span>
+            </span>
+          )}
+        </div>
         <div className="mt-auto flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-3">
           <Price value={product.price} className={product.price === null ? "text-sm" : "text-lg"} />
           {/* touch: always visible */}

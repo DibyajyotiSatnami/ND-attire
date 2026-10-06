@@ -5,7 +5,7 @@ export const STEPS = [
     title: "Pick your pieces",
     body: "Add mekhela sador, sarees or dupattas to your bag. Ask about any handpainted design.",
   },
-  { title: "Send your bag on WhatsApp", body: "One tap sends your list, total and delivery address to us." },
+  { title: "Send your bag on WhatsApp", body: "One tap sends your pieces, colours and quantities to us." },
   { title: "Confirm and pay", body: "We confirm availability, delivery charges and payment details on chat." },
   { title: "We pack and dispatch", body: "Your order is packed at our studio and sent your way." },
 ];
