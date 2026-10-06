@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: PageProps<"/product/[slug]">)
       p.colours.length > 1 ? `, in ${p.colours.map((c) => c.name.toLowerCase()).join(", ")}` : ""
     }. Enquire or order on WhatsApp from ND Attire.`,
     alternates: { canonical: `/product/${p.slug}` },
-    openGraph: { images: [{ url: cover.src, width: cover.width, height: cover.height, alt: p.alt }] },
+    openGraph: { images: [{ url: `${site.url}${cover.src}`, width: cover.width, height: cover.height, alt: p.alt }] },
   };
 }
 

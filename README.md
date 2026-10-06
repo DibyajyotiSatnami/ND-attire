@@ -109,6 +109,18 @@ Per-photo fixes live in `scripts/image-overrides.json`: `trim` (cut strips off t
 
 > The brief asked for EasyOCR + LaMa (IOPaint) and the Real-ESRGAN binary. Their weights download from GitHub and Hugging Face, which were blocked where this was built. The pipeline therefore uses tools whose models ship inside PyPI wheels: RapidOCR, OpenCV FSR inpainting, and Real-ESRGAN x4plus weights run through ncnn on CPU. If `iopaint` is installed and can load LaMa, the script uses it automatically, which noticeably improves the cleaned areas.
 
+## Publish on GitHub Pages
+
+The repo includes `.github/workflows/deploy-pages.yml`, which builds a static copy of the site and publishes it.
+
+1. On GitHub, open the repo's **Settings → Pages**. Under **Build and deployment → Source**, choose **GitHub Actions**.
+2. Merge your changes into the default branch (shown on the repo's main page). Each push to that branch rebuilds and republishes the site. You can also run it by hand from **Actions → Deploy to GitHub Pages → Run workflow**.
+3. When the run finishes, the address appears on the run page and under **Settings → Pages**, e.g. `https://<username>.github.io/ND-attire/`.
+
+To use your own domain, add it under **Settings → Pages → Custom domain**; the next run picks it up automatically.
+
+Build the same static copy locally with `BASE_PATH=/ND-attire npm run build:pages` (output in `out/`). Static hosting has no server, so two things differ from the Vercel build: images use the pre-built 800 px and 1600 px files instead of the image optimiser, and the old single-colour handloom URLs (`/product/hl-wash-red` and so on) do not redirect.
+
 ## Deploy to Vercel
 
 1. Push this repo to GitHub, then on vercel.com choose **Add New → Project** and import it. The defaults (Next.js, `npm run build`) are correct.

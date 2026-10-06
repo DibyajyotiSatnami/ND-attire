@@ -42,7 +42,8 @@ export const viewport: Viewport = {
 };
 
 // Decide before first paint whether the hero intro plays (home, once per session, motion allowed).
-const introScript = `try{var d=document.documentElement;if(location.pathname==="/"&&sessionStorage.getItem("nd-intro")!=="1"&&!matchMedia("(prefers-reduced-motion: reduce)").matches)d.dataset.intro="play"}catch(e){}`;
+const home = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/`;
+const introScript = `try{var d=document.documentElement;if(location.pathname===${JSON.stringify(home)}&&sessionStorage.getItem("nd-intro")!=="1"&&!matchMedia("(prefers-reduced-motion: reduce)").matches)d.dataset.intro="play"}catch(e){}`;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
