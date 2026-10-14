@@ -12,7 +12,8 @@ send2trash
 plyer
 # Voice
 SpeechRecognition
-pyaudio
+sounddevice
+numpy
 pyttsx3
 # Only needed if you set JARVIS_BRAIN=claude:
 # anthropic>=1.13.0

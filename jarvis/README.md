@@ -27,14 +27,14 @@ Deleted files go to the Recycle Bin.
 **PC needed:** Windows 10/11 with **8 GB RAM or more** (16 GB is better). A graphics card (NVIDIA) makes replies
 much faster, but isn't required.
 
-1. Install **Python 3.12** from <https://www.python.org/downloads/>. On the first installer screen,
+1. Install **Python** (3.10 or newer, including 3.14) from <https://www.python.org/downloads/>. On the first installer screen,
    tick **"Add python.exe to PATH"**.
 2. Install **Ollama** from <https://ollama.com/download> (Windows). After installing, it runs in the background;
    you'll see a llama icon near the clock.
 3. Download this `jarvis` folder to your PC (e.g. `C:\Jarvis`).
 4. Double-click **`setup.bat`**. It installs everything, creates a `.env` file, and downloads the AI brain
    (`qwen2.5:7b`, about 4.7 GB, so this part takes a while).
-   - If `pyaudio` fails to install, run `pip install pipwin` then `pipwin install pyaudio` in the same window.
+   - If an install step fails, run `setup.bat` again; if it still fails, send the error text to whoever set this up.
 5. Open **`.env`** in Notepad and fill in:
    - `JARVIS_TOKEN=` a long random password (e.g. `nd-jarvis-7Hq2pLx9Vr4m`). Your phone uses it.
    - `JARVIS_USER_NAME=` what Jarvis should call you, and `JARVIS_CITY=`
