@@ -16,5 +16,7 @@ if errorlevel 1 (
   ollama pull qwen2.5:7b
 )
 echo.
-echo Setup done. Open jarvis\.env in Notepad, set JARVIS_TOKEN and your name, then run start.bat
+echo Setup done. Notepad will now open your .env file:
+echo set JARVIS_TOKEN and your name, save it, then run start.bat
 pause
+start notepad "%~dp0.env"
