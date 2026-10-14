@@ -304,6 +304,18 @@ def notify(title: str, message: str) -> str:
     return "Notification shown."
 
 
+# ---------------------------------------------------------------- web
+
+def web_search(query: str) -> str:
+    """Free DuckDuckGo search (used by the Ollama brain; Claude has its own)."""
+    from ddgs import DDGS
+
+    results = DDGS().text(query, max_results=6)
+    if not results:
+        return "No results."
+    return "\n\n".join(f"{r.get('title')}\n{r.get('href')}\n{r.get('body')}" for r in results)
+
+
 # ---------------------------------------------------------------- memory
 
 def load_memory() -> list[str]:
@@ -370,19 +382,26 @@ TOOLS: list[Tool] = [
     Tool("notify", "Show a Windows notification.", {"title": _s("Title"), "message": _s("Message")}, notify),
     Tool("remember", "Save a fact about the user to long-term memory (preferences, names, paths, routines).", {"fact": _s("The fact")}, remember),
     Tool("forget", "Remove facts from long-term memory.", {"fact_contains": _s("Text the fact contains")}, forget),
+    Tool("web_search", "Search the internet for news, weather, prices, scores and anything current.",
+         {"query": _s("Search query")}, web_search),
 ]
 
 TOOLS_BY_NAME = {t.name: t for t in TOOLS}
 
 
-def api_tool_definitions() -> list[dict]:
+def tool_definitions(brain: str) -> list[dict]:
+    """Tool list in the format each brain expects."""
     defs = []
     for t in TOOLS:
+        if brain == "claude" and t.name == "web_search":
+            continue  # Claude uses Anthropic's hosted web search instead (added below)
         d = t.definition()
-        d["input_schema"]["properties"] = {
+        d["input_schema"]["properties"] = {  # "optional" is our own marker; the model must not see it
             k: {kk: vv for kk, vv in v.items() if kk != "optional"} for k, v in t.schema.items()
         }
-        defs.append(d)  # "optional" is our own marker; the API must not see it
-    # Anthropic-hosted web search: news, weather, prices, facts.
-    defs.append({"type": "web_search_20260209", "name": "web_search", "max_uses": 5})
-    return defs
+        defs.append(d)
+    if brain == "claude":
+        defs.append({"type": "web_search_20260209", "name": "web_search", "max_uses": 5})
+        return defs
+    return [{"type": "function", "function": {"name": d["name"], "description": d["description"],
+                                              "parameters": d["input_schema"]}} for d in defs]

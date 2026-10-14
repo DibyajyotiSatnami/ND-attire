@@ -1,12 +1,16 @@
-"""Jarvis's brain: Claude + tools, with a confirmation gate on risky actions.
+"""Jarvis's brain: an AI model + tools, with a confirmation gate on risky actions.
+
+Two brains, picked by JARVIS_BRAIN in .env:
+  - ollama (default): a free AI model running on your own PC via Ollama.
+  - claude: Claude through the Anthropic API (needs an API key, smarter).
 
 How confirmation works (same for voice, the phone page and Siri):
-  1. Claude calls a risky tool (delete, shell command, shutdown...).
+  1. The model calls a risky tool (delete, shell command, shutdown...).
   2. The gate does NOT run it; it records the exact call as "pending" and tells
-     Claude to ask you.
+     the model to ask you.
   3. If your very next message is a yes ("yes", "haan", "do it", "confirm"),
-     the pending calls are approved and Claude re-issues them. Anything else
-     cancels them. Claude can't approve on its own — only your reply can.
+     the pending calls are approved and the model re-issues them. Anything else
+     cancels them. The model can't approve on its own — only your reply can.
 """
 
 import json
@@ -16,10 +20,8 @@ import threading
 import time
 from datetime import datetime
 
-import anthropic
-
 import config
-from tools import TOOLS_BY_NAME, api_tool_definitions, load_memory
+from tools import TOOLS_BY_NAME, load_memory, tool_definitions
 
 log = logging.getLogger("jarvis")
 
@@ -28,9 +30,10 @@ YES = {
     "go ahead", "proceed", "yes do it", "yes please", "haan", "ha", "han", "haa", "kar do", "karo",
 }
 
-MAX_HISTORY_MESSAGES = 80   # start a fresh conversation past this
-IDLE_RESET_SECONDS = 20 * 60  # ...or after 20 minutes of silence
-MAX_STEPS = 25              # tool rounds per request
+IDLE_RESET_SECONDS = 20 * 60  # start a fresh conversation after 20 minutes of silence
+
+NEEDS_CONFIRMATION = ("NOT RUN — this action needs the user's confirmation. Tell them in one sentence exactly "
+                      "what you will do and ask them to say yes. Do not call it again until they do.")
 
 
 def _is_yes(text: str) -> bool:
@@ -43,19 +46,22 @@ def _call_key(name: str, args: dict) -> str:
     return name + json.dumps(args, sort_keys=True)
 
 
+def make_brain() -> "Brain":
+    return ClaudeBrain() if config.BRAIN == "claude" else OllamaBrain()
+
+
 class Brain:
+    """Shared parts: conversation, locking, the confirmation gate. Subclasses talk to a model."""
+
+    MAX_STEPS = 25  # tool rounds per request
+
     def __init__(self):
-        self.client = anthropic.Anthropic()
-        self.tools = api_tool_definitions()
         self.lock = threading.Lock()  # voice and phone share one conversation
         self._reset()
 
-    # The system prompt is built once per conversation and never edited
-    # mid-conversation (editing it would invalidate earlier thinking blocks).
-    def _reset(self):
-        memory = load_memory()
-        memory_text = "\n".join(f"- {m}" for m in memory) or "(nothing yet)"
-        self.system = f"""You are JARVIS, a personal AI assistant running on {config.USER_NAME}'s Windows PC, \
+    def _system_prompt(self) -> str:
+        memory_text = "\n".join(f"- {m}" for m in load_memory()) or "(nothing yet)"
+        return f"""You are JARVIS, a personal AI assistant running on {config.USER_NAME}'s Windows PC, \
 with full control of it through your tools. {config.USER_NAME} talks to you by voice on the PC, or from their iPhone \
 (web page or Siri). They may speak English, Hindi, Odia or a mix — reply in the language they used.
 {f"They live in {config.CITY}." if config.CITY else ""}
@@ -75,6 +81,10 @@ the tool result says so.
 
 What you remember about {config.USER_NAME}:
 {memory_text}"""
+
+    def _reset(self):
+        # Built once per conversation and never edited mid-conversation.
+        self.system = self._system_prompt()
         self.messages: list = []
         self.pending: dict[str, str] = {}
         self.approved: set[str] = set()
@@ -91,24 +101,12 @@ What you remember about {config.USER_NAME}:
                 log.exception("request failed")
                 return self._error_reply(e)
 
-    @staticmethod
-    def _error_reply(e: Exception) -> str:
-        if isinstance(e, anthropic.AuthenticationError):
-            return "My API key isn't working. Please check ANTHROPIC_API_KEY in the .env file."
-        if isinstance(e, anthropic.RateLimitError):
-            return "I'm being rate limited right now. Give me a moment and try again."
-        if isinstance(e, anthropic.APIConnectionError):
-            return "I can't reach my brain. Is the internet connected?"
-        if isinstance(e, anthropic.APIStatusError):
-            return f"Something went wrong on my side (error {e.status_code}). Please try again."
-        return "Something unexpected went wrong. Check jarvis.log for details."
-
     def _ask(self, text: str, source: str) -> str:
         if text.strip().lower() in ("new conversation", "reset", "forget this conversation"):
             self._reset()
             return "Fresh start. What can I do for you?"
 
-        if (time.time() - self.last_active > IDLE_RESET_SECONDS) or len(self.messages) > MAX_HISTORY_MESSAGES:
+        if time.time() - self.last_active > IDLE_RESET_SECONDS:
             self._reset()
         self.last_active = time.time()
 
@@ -118,11 +116,163 @@ What you remember about {config.USER_NAME}:
             self.pending = {}
 
         now = datetime.now().strftime("%a %d %b %Y %I:%M %p")
-        self.messages.append({"role": "user", "content": f"[{now} | via {source}] {text}"})
+        try:
+            return self._loop(f"[{now} | via {source}] {text}")
+        finally:
+            self.approved = set()
 
-        for _ in range(MAX_STEPS):
+    def run_tool(self, name: str, args: dict) -> tuple[object, bool]:
+        """Run one tool call through the confirmation gate. Returns (output, is_error)."""
+        tool = TOOLS_BY_NAME.get(name)
+        if tool is None:
+            return f"Unknown tool {name}", True
+
+        key = _call_key(name, args)
+        if tool.is_risky(args) and key not in self.approved:
+            self.pending[key] = name
+            log.info("needs confirmation: %s %s", name, args)
+            return NEEDS_CONFIRMATION, False
+        self.approved.discard(key)
+
+        log.info("tool %s %s", name, args)
+        try:
+            return tool.func(**args), False
+        except Exception as e:  # report failures to the model so it can try another way
+            log.exception("tool %s failed", name)
+            return f"Error: {type(e).__name__}: {e}", True
+
+    def check(self) -> str | None:
+        """Return a setup problem to show at startup, or None if ready."""
+        return None
+
+    def _loop(self, user_text: str) -> str:
+        raise NotImplementedError
+
+    def _error_reply(self, e: Exception) -> str:
+        return "Something unexpected went wrong. Check jarvis.log for details."
+
+
+# --------------------------------------------------------------------------- Ollama (free, local)
+
+class OllamaBrain(Brain):
+    MAX_STEPS = 10
+    MAX_HISTORY = 30  # local models have small memories; keep the recent part of the chat
+
+    def __init__(self):
+        import requests
+
+        self.http = requests.Session()
+        self.tools = tool_definitions("ollama")
+        super().__init__()
+
+    def check(self) -> str | None:
+        try:
+            tags = self.http.get(f"{config.OLLAMA_URL}/api/tags", timeout=5).json()
+        except Exception:
+            return "Ollama isn't running. Install it from https://ollama.com and open the Ollama app."
+        names = {m["name"] for m in tags.get("models", [])}
+        for model in filter(None, [config.OLLAMA_MODEL, config.VISION_MODEL]):
+            if model not in names and f"{model}:latest" not in names:
+                return f"The model '{model}' isn't downloaded. Run:  ollama pull {model}"
+        return None
+
+    def _chat(self, model: str, messages: list, tools: list | None = None) -> dict:
+        body = {
+            "model": model,
+            "messages": messages,
+            "stream": False,
+            "keep_alive": "30m",  # stay loaded in memory so replies are quick
+            "options": {"num_ctx": config.OLLAMA_CONTEXT, "temperature": 0.3},
+        }
+        if tools:
+            body["tools"] = tools
+        r = self.http.post(f"{config.OLLAMA_URL}/api/chat", json=body, timeout=600)
+        if r.status_code != 200:
+            raise RuntimeError(f"Ollama error {r.status_code}: {r.text[:300]}")
+        return r.json()["message"]
+
+    def _trim(self):
+        if len(self.messages) > self.MAX_HISTORY:
+            cut = self.messages[-self.MAX_HISTORY:]
+            while cut and cut[0]["role"] != "user":  # never start mid tool-call
+                cut.pop(0)
+            self.messages[:] = cut
+
+    def _loop(self, user_text: str) -> str:
+        self._trim()
+        self.messages.append({"role": "user", "content": user_text})
+        for _ in range(self.MAX_STEPS):
+            msg = self._chat(config.OLLAMA_MODEL, [{"role": "system", "content": self.system}] + self.messages, self.tools)
+            msg = {k: v for k, v in msg.items() if k in ("role", "content", "tool_calls")}
+            self.messages.append(msg)
+            calls = msg.get("tool_calls") or []
+            if not calls:
+                return _clean(msg.get("content", "")) or "Done."
+            for call in calls:
+                fn = call.get("function", {})
+                name, args = fn.get("name", ""), fn.get("arguments") or {}
+                if isinstance(args, str):
+                    try:
+                        args = json.loads(args)
+                    except json.JSONDecodeError:
+                        args = {}
+                output, _ = self.run_tool(name, args)
+                if isinstance(output, list):  # a screenshot: turn it into words for the text model
+                    output = self._describe_screenshot(output)
+                self.messages.append({"role": "tool", "tool_name": name, "content": str(output)[:8000]})
+        return "That took too many steps, so I stopped. Tell me how you'd like to continue."
+
+    def _describe_screenshot(self, blocks: list) -> str:
+        if not config.VISION_MODEL:
+            return ("Screen reading is off (no JARVIS_VISION_MODEL set). Use keyboard shortcuts, run_command or "
+                    "dedicated tools instead.")
+        size_note = next(b["text"] for b in blocks if b["type"] == "text")
+        image = next(b["source"]["data"] for b in blocks if b["type"] == "image")
+        msg = self._chat(config.VISION_MODEL, [{
+            "role": "user",
+            "content": "Describe this computer screenshot for someone who can't see it: which app/window is open, "
+                       "the main text, and the buttons/links/fields with their approximate (x, y) pixel position. "
+                       f"{size_note}",
+            "images": [image],
+        }])
+        return "Screen description: " + msg.get("content", "")
+
+    def _error_reply(self, e: Exception) -> str:
+        import requests
+
+        if isinstance(e, requests.ConnectionError):
+            return "I can't reach Ollama. Please open the Ollama app on the PC."
+        if isinstance(e, requests.Timeout):
+            return "My brain took too long to answer. Try a smaller model or a simpler request."
+        if "not found" in str(e):
+            return f"The model isn't downloaded yet. Run: ollama pull {config.OLLAMA_MODEL}"
+        return super()._error_reply(e)
+
+
+def _clean(text: str) -> str:
+    """Drop <think>...</think> sections that some local models print."""
+    return re.sub(r"<think>.*?</think>", "", text, flags=re.S).strip()
+
+
+# --------------------------------------------------------------------------- Claude (API key)
+
+class ClaudeBrain(Brain):
+    def __init__(self):
+        import anthropic
+
+        self.anthropic = anthropic
+        self.client = anthropic.Anthropic()
+        self.tools = tool_definitions("claude")
+        super().__init__()
+
+    def _loop(self, user_text: str) -> str:
+        # Never edit or trim earlier messages: start over instead when the chat gets long.
+        if len(self.messages) > 80:
+            self._reset()
+        self.messages.append({"role": "user", "content": user_text})
+        for _ in range(self.MAX_STEPS):
             response = self.client.beta.messages.create(
-                model=config.MODEL,
+                model=config.CLAUDE_MODEL,
                 max_tokens=16000,
                 system=self.system,
                 tools=self.tools,
@@ -140,39 +290,29 @@ What you remember about {config.USER_NAME}:
             if response.stop_reason == "pause_turn":
                 continue  # server-side web search still working; resume
             if response.stop_reason != "tool_use":
-                break
+                reply = " ".join(b.text for b in response.content if b.type == "text").strip()
+                return reply or "Done."
 
             results = []
             for block in response.content:
                 if block.type == "tool_use":
-                    results.append(self._run_tool(block))
+                    output, is_error = self.run_tool(block.name, dict(block.input or {}))
+                    result = {"type": "tool_result", "tool_use_id": block.id,
+                              "content": output if isinstance(output, list) else str(output)}
+                    if is_error:
+                        result["is_error"] = True
+                    results.append(result)
             self.messages.append({"role": "user", "content": results})
-        else:
-            return "That took too many steps, so I stopped. Tell me how you'd like to continue."
+        return "That took too many steps, so I stopped. Tell me how you'd like to continue."
 
-        self.approved = set()
-        reply = " ".join(b.text for b in response.content if b.type == "text").strip()
-        return reply or "Done."
-
-    def _run_tool(self, block) -> dict:
-        tool = TOOLS_BY_NAME.get(block.name)
-        args = dict(block.input or {})
-        result: dict = {"type": "tool_result", "tool_use_id": block.id}
-        if tool is None:
-            return {**result, "content": f"Unknown tool {block.name}", "is_error": True}
-
-        key = _call_key(block.name, args)
-        if tool.is_risky(args) and key not in self.approved:
-            self.pending[key] = block.name
-            log.info("needs confirmation: %s %s", block.name, args)
-            return {**result, "content": "NOT RUN — this action needs the user's confirmation. Tell them in one "
-                    "sentence exactly what you will do and ask them to say yes. Do not call it again until they do."}
-        self.approved.discard(key)
-
-        log.info("tool %s %s", block.name, args)
-        try:
-            output = tool.func(**args)
-        except Exception as e:  # report failures to Claude so it can try another way
-            log.exception("tool %s failed", block.name)
-            return {**result, "content": f"Error: {type(e).__name__}: {e}", "is_error": True}
-        return {**result, "content": output if isinstance(output, list) else str(output)}
+    def _error_reply(self, e: Exception) -> str:
+        a = self.anthropic
+        if isinstance(e, a.AuthenticationError):
+            return "My API key isn't working. Please check ANTHROPIC_API_KEY in the .env file."
+        if isinstance(e, a.RateLimitError):
+            return "I'm being rate limited right now. Give me a moment and try again."
+        if isinstance(e, a.APIConnectionError):
+            return "I can't reach my brain. Is the internet connected?"
+        if isinstance(e, a.APIStatusError):
+            return f"Something went wrong on my side (error {e.status_code}). Please try again."
+        return super()._error_reply(e)

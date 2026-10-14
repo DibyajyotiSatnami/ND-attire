@@ -32,10 +32,13 @@ def main():
     if not config.TOKEN or len(config.TOKEN) < 12:
         sys.exit("Set JARVIS_TOKEN in jarvis/.env to a long random password first (see README).")
 
-    from brain import Brain
+    from brain import make_brain
     from server import build_app
 
-    brain = Brain()
+    brain = make_brain()
+    problem = brain.check()
+    if problem:
+        print(f"\n  !! {problem}\n")
     voice_on = config.VOICE_ENABLED and "--no-voice" not in sys.argv
 
     mouth = None
@@ -55,7 +58,8 @@ def main():
     ).start()
 
     print("=" * 60)
-    print(" JARVIS is running.")
+    brain_name = f"Ollama ({config.OLLAMA_MODEL})" if config.BRAIN != "claude" else f"Claude ({config.CLAUDE_MODEL})"
+    print(f" JARVIS is running. Brain: {brain_name}")
     if voice_on:
         print(f' Voice: say "{config.WAKE_WORD.title()}, open Chrome"')
     print(f" iPhone (same Wi-Fi): http://{lan_ip()}:{config.SERVER_PORT}/?token={config.TOKEN}")

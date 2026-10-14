@@ -1,7 +1,8 @@
-anthropic>=1.13.0
 python-dotenv
 fastapi
 uvicorn
+requests
+ddgs
 # PC control
 pyautogui
 pyperclip
@@ -13,3 +14,5 @@ plyer
 SpeechRecognition
 pyaudio
 pyttsx3
+# Only needed if you set JARVIS_BRAIN=claude:
+# anthropic>=1.13.0
