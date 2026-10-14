@@ -3,3 +3,4 @@ memory.json
 jarvis.log
 .venv/
 __pycache__/
+!.env.example
